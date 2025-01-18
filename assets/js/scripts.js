@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 data.categories.forEach(category => {
                     const option = document.createElement("option");
-                    option.value = category.nombre; // Usamos el nombre para la visualización
+                    option.value = category.id; // Usamos el id para la selección
                     option.textContent = category.nombre;
                     categorySelect.appendChild(option);
                 });
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 filterCategorySelect.innerHTML = '<option value="">Todas</option>';
                 data.categories.forEach(category => {
                     const option = document.createElement("option");
-                    option.value = category.nombre;
+                    option.value = category.id;
                     option.textContent = category.nombre;
                     filterCategorySelect.appendChild(option);
                 });
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 patientSelect.innerHTML = '<option value="">Seleccionar</option>'; 
                 data.patients.forEach(patient => {
                     const option = document.createElement("option");
-                    option.value = patient.nombre;
+                    option.value = patient.id;
                     option.textContent = patient.nombre;
                     patientSelect.appendChild(option);
                 });

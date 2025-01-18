@@ -1,29 +1,19 @@
 <?php
 require 'conexion.php';
 
-$response = ['status' => 'error'];
+header('Content-Type: application/json');
 
 try {
-    $query = "SELECT * FROM categorias";
-    $result = $conn->query($query);
-
-    if ($result) {
-        $categories = [];
-        while ($row = $result->fetch_assoc()) {
-            $categories[] = [
-                'id' => $row['id'],
-                'nombre' => $row['nombre'],
-                'tipo' => $row['tipo']
-            ];
-        }
-        $response = ['status' => 'success', 'categories' => $categories];
-    } else {
-        $response['error'] = 'Error al obtener las categorías: ' . $conn->error;
+    $result = $conn->query("SELECT id, nombre FROM categorias");
+    if (!$result) {
+        throw new Exception("Error al ejecutar la consulta: " . $conn->error);
     }
-} catch (Exception $e) {
-    $response['error'] = 'Error al obtener las categorías: ' . $e->getMessage();
-}
 
-header('Content-Type: application/json');
-echo json_encode($response);
+    $categories = $result->fetch_all(MYSQLI_ASSOC);
+    echo json_encode(['status' => 'success', 'categories' => $categories]);
+} catch (Exception $e) {
+    echo json_encode(['status' => 'error', 'error' => $e->getMessage()]);
+} finally {
+    $conn->close();
+}
 ?>

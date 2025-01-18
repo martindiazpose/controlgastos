@@ -1,76 +1,91 @@
 <?php
 require 'conexion.php';
 
-$type = $_GET['type'] ?? 'all'; // Tipo de transacción (ej. 'Ingreso', 'Egreso')
-$month = $_GET['month'] ?? date('Y-m'); // Mes en formato 'YYYY-MM'
-$category = $_GET['category'] ?? ''; // Categoría de transacción
-$page = $_GET['page'] ?? 1; // Página actual
-$limit = 10; // Número de transacciones por página
-$offset = ($page - 1) * $limit;
-
-$response = ['status' => 'error'];
+header('Content-Type: application/json');
 
 try {
-    // Escapar parámetros para evitar inyecciones SQL
-    $type = $conn->real_escape_string($type);
-    $month = $conn->real_escape_string($month);
-    $category = $conn->real_escape_string($category);
+    $month = $_GET['month'] ?? date('Y-m');
+    $type = $_GET['type'] ?? '';
+    $category = $_GET['category'] ?? '';
+    $page = $_GET['page'] ?? 1;
+    $limit = 10;
+    $offset = ($page - 1) * $limit;
 
-    // Construir la consulta base
-    $sql = "SELECT * FROM transacciones WHERE fecha LIKE '$month%'";
+    $query = "SELECT t.*, c.nombre as categoria, p.nombre as paciente 
+              FROM transacciones t 
+              LEFT JOIN categorias c ON t.categoria_id = c.id
+              LEFT JOIN pacientes p ON t.paciente_id = p.id
+              WHERE DATE_FORMAT(t.fecha, '%Y-%m') = ?";
 
-    // Filtrar por tipo si se especifica
-    if ($type !== 'all') {
-        $sql .= " AND tipo = '$type'";
+    $params = [$month];
+    $types = 's';
+
+    if (!empty($type)) {
+        $query .= " AND t.tipo = ?";
+        $types .= 's';
+        $params[] = $type;
     }
 
-    // Filtrar por categoría si se especifica
     if (!empty($category)) {
-        $sql .= " AND categoria = '$category'";
+        $query .= " AND c.nombre = ?";
+        $types .= 's';
+        $params[] = $category;
     }
 
-    // Añadir paginación
-    $sql .= " LIMIT $limit OFFSET $offset";
+    $query .= " LIMIT ? OFFSET ?";
+    $types .= 'ii';
+    $params[] = $limit;
+    $params[] = $offset;
 
-    // Ejecutar la consulta
-    $result = $conn->query($sql);
-
-    if ($result) {
-        $transactions = [];
-        while ($row = $result->fetch_assoc()) {
-            $transactions[] = $row;
-        }
-
-        // Contar el total de resultados para la paginación
-        $countSql = "SELECT COUNT(*) AS total FROM transacciones WHERE fecha LIKE '$month%'";
-        if ($type !== 'all') {
-            $countSql .= " AND tipo = '$type'";
-        }
-        if (!empty($category)) {
-            $countSql .= " AND categoria = '$category'";
-        }
-
-        $countResult = $conn->query($countSql);
-        $total = $countResult->fetch_assoc()['total'];
-        $pages = ceil($total / $limit);
-
-        // Respuesta con datos
-        $response = [
-            'status' => 'success',
-            'transactions' => $transactions,
-            'page' => $page,
-            'pages' => $pages,
-            'total' => $total
-        ];
-    } else {
-        // Manejar errores de la consulta
-        $response['error'] = $conn->error;
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        throw new Exception("Error preparando la consulta: " . $conn->error);
     }
+
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $transactions = $result->fetch_all(MYSQLI_ASSOC);
+
+    // Obtener el número total de transacciones
+    $total_query = "SELECT COUNT(*) as total FROM transacciones t 
+                    LEFT JOIN categorias c ON t.categoria_id = c.id
+                    WHERE DATE_FORMAT(t.fecha, '%Y-%m') = ?";
+    $params = [$month];
+    $types = 's';
+
+    if (!empty($type)) {
+        $total_query .= " AND t.tipo = ?";
+        $types .= 's';
+        $params[] = $type;
+    }
+
+    if (!empty($category)) {
+        $total_query .= " AND c.nombre = ?";
+        $types .= 's';
+        $params[] = $category;
+    }
+
+    $total_stmt = $conn->prepare($total_query);
+    if (!$total_stmt) {
+        throw new Exception("Error preparando la consulta: " . $conn->error);
+    }
+
+    $total_stmt->bind_param($types, ...$params);
+    $total_stmt->execute();
+    $total_result = $total_stmt->get_result();
+    $total_transactions = $total_result->fetch_assoc()['total'];
+    $total_pages = ceil($total_transactions / $limit);
+
+    echo json_encode([
+        'status' => 'success',
+        'transactions' => $transactions,
+        'page' => $page,
+        'pages' => $total_pages
+    ]);
 } catch (Exception $e) {
-    $response['error'] = 'Error al obtener las transacciones: ' . $e->getMessage();
+    echo json_encode(['status' => 'error', 'error' => $e->getMessage()]);
+} finally {
+    $conn->close();
 }
-
-// Devolver la respuesta como JSON
-header('Content-Type: application/json');
-echo json_encode($response);
 ?>

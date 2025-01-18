@@ -5,18 +5,17 @@ $response = ['status' => 'error'];
 
 try {
     $tipo = $_POST['type'] ?? '';
-    $categoria = $_POST['category'] ?? '';
+    $categoria_id = $_POST['category'] ?? 0;
     $monto = $_POST['amount'] ?? 0;
     $fecha = date('Y-m-d');
-    $paciente = $_POST['patient'] ?? null;
+    $paciente_id = $_POST['patient'] ?? null;
     $comentarios = $_POST['comments'] ?? '';
-    $moneda = 'UYU';
 
     // Validar los datos
-    if (!empty($tipo) && !empty($categoria) && $monto > 0) {
-        $query = "INSERT INTO transacciones (tipo, categoria, monto, fecha, paciente, comentarios, moneda) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    if (!empty($tipo) && $categoria_id > 0 && $monto > 0) {
+        $query = "INSERT INTO transacciones (tipo, categoria_id, monto, fecha, paciente_id, comentarios) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssdssss", $tipo, $categoria, $monto, $fecha, $paciente, $comentarios, $moneda);
+        $stmt->bind_param("sidiss", $tipo, $categoria_id, $monto, $fecha, $paciente_id, $comentarios);
 
         if ($stmt->execute()) {
             $response = ['status' => 'success'];
@@ -34,4 +33,6 @@ try {
 
 header('Content-Type: application/json');
 echo json_encode($response);
+
+$conn->close();
 ?>
