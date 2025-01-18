@@ -27,3 +27,11 @@ Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_categories_and_types.php on line 17
 [18-Jan-2025 18:39:04 America/Montevideo] No se encontraron categorías para el tipo: ingreso
+[18-Jan-2025 18:42:05 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/obtener_pacientes.php:20
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/obtener_pacientes.php on line 20
+[18-Jan-2025 18:42:14 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/obtener_pacientes.php:20
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/obtener_pacientes.php on line 20
