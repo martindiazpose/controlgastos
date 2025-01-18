@@ -18,3 +18,11 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 46
+[18-Jan-2025 18:29:37 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_categories_and_types.php:17
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_categories_and_types.php on line 17
+[18-Jan-2025 18:29:47 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_categories_and_types.php:17
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_categories_and_types.php on line 17

@@ -14,17 +14,22 @@ try {
 
         $stmt->bind_param('s', $type);
         $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt->bind_result($id, $nombre);
+        $categories = [];
+        while ($stmt->fetch()) {
+            $categories[] = ['id' => $id, 'nombre' => $nombre];
+        }
+        $stmt->close();
     } else {
         $result = $conn->query("SELECT id, nombre, tipo FROM categorias");
         if (!$result) {
             throw new Exception("Error al ejecutar la consulta: " . $conn->error);
         }
-    }
 
-    $categories = [];
-    while ($row = $result->fetch_assoc()) {
-        $categories[] = $row;
+        $categories = [];
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
     }
 
     echo json_encode(['status' => 'success', 'categories' => $categories]);

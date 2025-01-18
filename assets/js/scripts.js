@@ -72,9 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             } else {
                 console.error('Error al cargar categorías:', data.error);
+                categorySelect.innerHTML = '<option value="">Error al cargar categorías</option>';
             }
         } catch (error) {
             console.error('Error al cargar categorías:', error);
+            categorySelect.innerHTML = '<option value="">Error al cargar categorías</option>';
         }
     }
 
@@ -109,9 +111,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             } else {
                 console.error('Error al cargar categorías y tipos:', data.error);
+                categorySelect.innerHTML = '<option value="">Error al cargar categorías y tipos</option>';
             }
         } catch (error) {
             console.error('Error al cargar categorías y tipos:', error);
+            categorySelect.innerHTML = '<option value="">Error al cargar categorías y tipos</option>';
         }
     }
 
@@ -133,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } catch (error) {
             console.error('Error al cargar pacientes:', error);
+            patientSelect.innerHTML = '<option value="">Error al cargar pacientes</option>';
         }
     }
 
