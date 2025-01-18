@@ -128,10 +128,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Load patients based on the type (mensual o semanal)
     async function loadPatients(type) {
         try {
+            // Asegurarse de que el tipo está siendo pasado en la URL
             const response = await fetch(`./php/obtener_pacientes.php?type=${type}`);
             const data = await response.json();
+    
+            // Agregar un console.log para depurar la respuesta
+            console.log(data);
+    
             if (data.status === 'success' && Array.isArray(data.patients)) {
-                patientSelect.innerHTML = '<option value="">Seleccionar</option>'; 
+                patientSelect.innerHTML = '<option value="">Seleccionar</option>';
                 data.patients.forEach(patient => {
                     const option = document.createElement("option");
                     option.value = patient.nombre; // Usamos el nombre para la selección
@@ -139,13 +144,27 @@ document.addEventListener('DOMContentLoaded', function () {
                     patientSelect.appendChild(option);
                 });
             } else {
-                throw new Error('Formato de datos no válido');
+                console.error('Error al cargar pacientes:', data.error);
+                patientSelect.innerHTML = '<option value="">Error al cargar pacientes</option>';
             }
         } catch (error) {
             console.error('Error al cargar pacientes:', error);
             patientSelect.innerHTML = '<option value="">Error al cargar pacientes</option>';
         }
     }
+    
+    // Verificar que esta función se llama correctamente cuando se selecciona una categoría
+    categorySelect.addEventListener('change', function () {
+        const category = categorySelect.selectedOptions[0]?.textContent || '';
+        if (category.includes('Paciente')) {
+            const type = category.includes('Mensual') ? 'mensual' : 'semanal';
+            patientField.style.display = 'block';
+            loadPatients(type); // Aquí es donde se pasa el parámetro `type`
+        } else {
+            patientField.style.display = 'none';
+            patientSelect.innerHTML = "";
+        }
+    });
 
     // Show modal with message
     function showModal(title, message) {

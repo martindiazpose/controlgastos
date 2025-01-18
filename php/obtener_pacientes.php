@@ -10,6 +10,9 @@ try {
         throw new Exception("El tipo es requerido.");
     }
 
+    // Agregar mensajes de depuración para verificar el tipo recibido
+    error_log("Tipo recibido: " . $type);
+
     $stmt = $conn->prepare("SELECT id, nombre FROM pacientes WHERE tipo = ?");
     if (!$stmt) {
         throw new Exception("Error preparando la consulta: " . $conn->error);
