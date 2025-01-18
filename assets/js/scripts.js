@@ -37,59 +37,48 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Load categories based on type selection
+    typeSelect.addEventListener('change', function () {
+        const type = typeSelect.value.toLowerCase();
+        loadCategoriesByType(type);
+    });
+
+    // Load patients based on category selection
+    categorySelect.addEventListener('change', function () {
+        const category = categorySelect.selectedOptions[0]?.textContent || '';
+        if (category.includes('Paciente')) {
+            const type = category.includes('Mensual') ? 'mensual' : 'semanal';
+            patientField.style.display = 'block';
+            loadPatients(type);
+        } else {
+            patientField.style.display = 'none';
+            patientSelect.innerHTML = "";
+        }
+    });
+
     // Load categories and types for the select options
-    async function loadCategoriesAndTypes() {
+    async function loadCategoriesByType(type) {
         try {
-            const response = await fetch('./php/get_categories.php');
+            const response = await fetch(`./php/get_categories_and_types.php?type=${type}`);
             const data = await response.json();
 
-            if (data.status === 'success') {
-                typeSelect.innerHTML = '<option value="">Seleccionar</option>';
+            if (data.status === 'success' && Array.isArray(data.categories)) {
                 categorySelect.innerHTML = '<option value="">Seleccionar</option>';
-
-                typeSelect.innerHTML += '<option value="Ingreso">Ingreso</option><option value="Egreso">Egreso</option>';
-
                 data.categories.forEach(category => {
                     const option = document.createElement("option");
                     option.value = category.nombre; // Usamos el nombre para la selección
                     option.textContent = category.nombre;
                     categorySelect.appendChild(option);
                 });
-
-                // Cargar opciones de filtrado de categorías
-                const filterCategorySelect = document.getElementById('filter-category');
-                filterCategorySelect.innerHTML = '<option value="">Todas</option>';
-                data.categories.forEach(category => {
-                    const option = document.createElement("option");
-                    option.value = category.nombre;
-                    option.textContent = category.nombre;
-                    filterCategorySelect.appendChild(option);
-                });
-
             } else {
-                console.error('Error al cargar categorías y tipos:', data.error);
+                console.error('Error al cargar categorías:', data.error);
             }
         } catch (error) {
-            console.error('Error al cargar categorías y tipos:', error);
+            console.error('Error al cargar categorías:', error);
         }
     }
 
-    // Toggle patient field based on selected category
-    function togglePatientField() {
-        const category = categorySelect.selectedOptions[0]?.textContent || '';
-        if (patientField) {
-            if (category.includes('Paciente')) {
-                const type = category.includes('Mensual') ? 'mensual' : 'semanal';
-                patientField.style.display = 'block';
-                loadPatients(type);
-            } else {
-                patientField.style.display = 'none';
-                patientSelect.innerHTML = "";
-            }
-        }
-    }
-
-    // Load patients based on the type (mensual or semanal)
+    // Load patients based on the type (mensual o semanal)
     async function loadPatients(type) {
         try {
             const response = await fetch(`./php/obtener_pacientes.php?type=${type}`);
