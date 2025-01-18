@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Load categories and types for the select options
+    // Load categories by type
     async function loadCategoriesByType(type) {
         try {
             const response = await fetch(`./php/get_categories_and_types.php?type=${type}`);
@@ -75,6 +75,43 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         } catch (error) {
             console.error('Error al cargar categorías:', error);
+        }
+    }
+
+    // Load all categories and types for the initial load
+    async function loadCategoriesAndTypes() {
+        try {
+            const response = await fetch('./php/get_categories_and_types.php');
+            const data = await response.json();
+
+            if (data.status === 'success' && Array.isArray(data.categories)) {
+                typeSelect.innerHTML = '<option value="">Seleccionar</option>';
+                categorySelect.innerHTML = '<option value="">Seleccionar</option>';
+
+                typeSelect.innerHTML += '<option value="Ingreso">Ingreso</option><option value="Egreso">Egreso</option>';
+
+                data.categories.forEach(category => {
+                    const option = document.createElement("option");
+                    option.value = category.nombre; // Usamos el nombre para la selección
+                    option.textContent = category.nombre;
+                    categorySelect.appendChild(option);
+                });
+
+                // Cargar opciones de filtrado de categorías
+                const filterCategorySelect = document.getElementById('filter-category');
+                filterCategorySelect.innerHTML = '<option value="">Todas</option>';
+                data.categories.forEach(category => {
+                    const option = document.createElement("option");
+                    option.value = category.nombre;
+                    option.textContent = category.nombre;
+                    filterCategorySelect.appendChild(option);
+                });
+
+            } else {
+                console.error('Error al cargar categorías y tipos:', data.error);
+            }
+        } catch (error) {
+            console.error('Error al cargar categorías y tipos:', error);
         }
     }
 
