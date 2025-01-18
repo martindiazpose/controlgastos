@@ -11,10 +11,9 @@ try {
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
-    $query = "SELECT t.*, c.nombre as categoria, p.nombre as paciente 
+    $query = "SELECT t.id, t.tipo, t.categoria, t.monto, t.fecha, t.paciente, t.comentarios, t.moneda, c.nombre as categoria
               FROM transacciones t 
-              LEFT JOIN categorias c ON t.categoria_id = c.id
-              LEFT JOIN pacientes p ON t.paciente_id = p.id
+              LEFT JOIN categorias c ON t.categoria = c.nombre
               WHERE DATE_FORMAT(t.fecha, '%Y-%m') = ?";
 
     $params = [$month];
@@ -27,7 +26,7 @@ try {
     }
 
     if (!empty($category)) {
-        $query .= " AND c.nombre = ?";
+        $query .= " AND t.categoria = ?";
         $types .= 's';
         $params[] = $category;
     }
@@ -44,12 +43,24 @@ try {
 
     $stmt->bind_param($types, ...$params);
     $stmt->execute();
-    $result = $stmt->get_result();
-    $transactions = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->bind_result($id, $tipo, $categoria, $monto, $fecha, $paciente, $comentarios, $moneda, $categoriaNombre);
+    
+    $transactions = [];
+    while ($stmt->fetch()) {
+        $transactions[] = [
+            'id' => $id,
+            'tipo' => $tipo,
+            'categoria' => $categoriaNombre,
+            'monto' => $monto,
+            'fecha' => $fecha,
+            'paciente' => $paciente,
+            'comentarios' => $comentarios,
+            'moneda' => $moneda
+        ];
+    }
 
     // Obtener el número total de transacciones
     $total_query = "SELECT COUNT(*) as total FROM transacciones t 
-                    LEFT JOIN categorias c ON t.categoria_id = c.id
                     WHERE DATE_FORMAT(t.fecha, '%Y-%m') = ?";
     $params = [$month];
     $types = 's';
@@ -61,7 +72,7 @@ try {
     }
 
     if (!empty($category)) {
-        $total_query .= " AND c.nombre = ?";
+        $total_query .= " AND t.categoria = ?";
         $types .= 's';
         $params[] = $category;
     }
@@ -73,8 +84,8 @@ try {
 
     $total_stmt->bind_param($types, ...$params);
     $total_stmt->execute();
-    $total_result = $total_stmt->get_result();
-    $total_transactions = $total_result->fetch_assoc()['total'];
+    $total_stmt->bind_result($total_transactions);
+    $total_stmt->fetch();
     $total_pages = ceil($total_transactions / $limit);
 
     echo json_encode([

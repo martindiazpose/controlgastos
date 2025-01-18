@@ -9,7 +9,11 @@ try {
         throw new Exception("Error al ejecutar la consulta: " . $conn->error);
     }
 
-    $categories = $result->fetch_all(MYSQLI_ASSOC);
+    $categories = [];
+    while ($row = $result->fetch_assoc()) {
+        $categories[] = $row;
+    }
+
     echo json_encode(['status' => 'success', 'categories' => $categories]);
 } catch (Exception $e) {
     echo json_encode(['status' => 'error', 'error' => $e->getMessage()]);

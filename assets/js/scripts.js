@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 data.categories.forEach(category => {
                     const option = document.createElement("option");
-                    option.value = category.id; // Usamos el id para la selección
+                    option.value = category.nombre; // Usamos el nombre para la selección
                     option.textContent = category.nombre;
                     categorySelect.appendChild(option);
                 });
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 filterCategorySelect.innerHTML = '<option value="">Todas</option>';
                 data.categories.forEach(category => {
                     const option = document.createElement("option");
-                    option.value = category.id;
+                    option.value = category.nombre;
                     option.textContent = category.nombre;
                     filterCategorySelect.appendChild(option);
                 });
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 patientSelect.innerHTML = '<option value="">Seleccionar</option>'; 
                 data.patients.forEach(patient => {
                     const option = document.createElement("option");
-                    option.value = patient.id;
+                    option.value = patient.nombre; // Usamos el nombre para la selección
                     option.textContent = patient.nombre;
                     patientSelect.appendChild(option);
                 });
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
         tbody.innerHTML = '';
 
         data.forEach(transaction => {
-            const patientDetail = (transaction.categoria.includes('Paciente Mensual') || transaction.categoria.includes('Paciente Semanal')) ? transaction.paciente : '';
+            const patientDetail = transaction.categoria ? transaction.categoria.includes('Paciente Mensual') || transaction.categoria.includes('Paciente Semanal') ? transaction.paciente : '' : '';
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${transaction.fecha}</td>

@@ -1,41 +1,36 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require 'conexion.php';
 
-$response = ['status' => 'error'];
+header('Content-Type: application/json');
 
 try {
-    $types = [];
+    $type = $_GET['type'] ?? '';
+
+    if (!empty($type)) {
+        $stmt = $conn->prepare("SELECT id, nombre FROM categorias WHERE tipo = ?");
+        if (!$stmt) {
+            throw new Exception("Error preparando la consulta: " . $conn->error);
+        }
+
+        $stmt->bind_param('s', $type);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    } else {
+        $result = $conn->query("SELECT id, nombre, tipo FROM categorias");
+        if (!$result) {
+            throw new Exception("Error al ejecutar la consulta: " . $conn->error);
+        }
+    }
+
     $categories = [];
-
-    // Obtener tipos de movimientos
-    $sql = "SELECT DISTINCT tipo AS value, tipo AS label FROM transacciones";
-    $result = $conn->query($sql);
-    if (!$result) {
-        throw new Exception("Error en la consulta SQL (tipos): " . $conn->error);
-    }
-    while ($row = $result->fetch_assoc()) {
-        $types[] = $row;
-    }
-
-    // Obtener categorías
-    $sql = "SELECT DISTINCT categoria AS value, categoria AS label FROM transacciones";
-    $result = $conn->query($sql);
-    if (!$result) {
-        throw new Exception("Error en la consulta SQL (categorías): " . $conn->error);
-    }
     while ($row = $result->fetch_assoc()) {
         $categories[] = $row;
     }
 
-    $response = ['status' => 'success', 'types' => $types, 'categories' => $categories];
+    echo json_encode(['status' => 'success', 'categories' => $categories]);
 } catch (Exception $e) {
-    $response['error'] = 'Error al obtener datos: ' . $e->getMessage();
+    echo json_encode(['status' => 'error', 'error' => $e->getMessage()]);
+} finally {
+    $conn->close();
 }
-
-header('Content-Type: application/json');
-echo json_encode($response);
 ?>
