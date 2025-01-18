@@ -1,0 +1,186 @@
+#patient-monthly-field,
+#patient-weekly-field {
+    display: none;
+}
+
+.chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.chart-container canvas {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    max-height: 400px;
+}
+
+@media (min-width: 768px) {
+    .chart-container canvas {
+        max-width: 45%;
+    }
+}
+
+.balance-info {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.balance-info div {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.balance-info .income {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.balance-info .expense {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.balance-info .balance {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.balance-info .savings {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+@media (min-width: 768px) {
+    .balance-info {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .balance-info div {
+        flex: 1 1 200px;
+        margin: 5px;
+    }
+
+    .chart-container {
+        justify-content: space-between;
+    }
+
+    .chart-container canvas {
+        max-width: 32%;
+    }
+}
+
+/* Estilo  para el modal */
+.modal-content {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    border-radius: 15px;
+    color: #fff;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    transform: scale(0.7);
+    animation: modalScale 0.3s forwards;
+}
+
+.modal-header, .modal-footer {
+    border: none;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    font-size: 1.2rem;
+    padding: 20px;
+}
+
+.btn-close {
+    color: #fff;
+    opacity: 1;
+    background-color: #ff7e5f;
+    border-radius: 50%;
+    border: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-close:hover {
+    background-color: #feb47b;
+}
+
+.btn-primary {
+    background-color: #ff7e5f;
+    border-color: #ff7e5f;
+}
+
+.btn-primary:hover {
+    background-color: #feb47b;
+    border-color: #feb47b;
+}
+
+@keyframes modalScale {
+    from {
+        transform: scale(0.7);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+/* Estilo  para el menú desplegable */
+.dropdown-toggle {
+    background-color: #ff7e5f;
+    border-color: #ff7e5f;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+    background-color: #feb47b;
+    border-color: #feb47b;
+}
+
+.dropdown-menu {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    border-radius: 15px;
+    border: none;
+    animation: dropdownAnimation 0.3s ease-out;
+}
+
+.dropdown-menu .dropdown-item {
+    color: #fff;
+    font-weight: bold;
+}
+
+.dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:focus {
+    background-color: #ff7e5f;
+}
+
+.dropdown-divider {
+    border-color: #fff;
+}
+
+@keyframes dropdownAnimation {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

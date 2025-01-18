@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Finanzas Personales</title>
+    <link rel="icon" href="/carpeta.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(function() { console.log("Service Worker Registered"); });
+    }
+</script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h1 {
+            margin-bottom: 24px;
+            text-align: center;
+            font-size: 24px;
+        }
+        .form-control {
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+        .btn-primary {
+            border-radius: 50px;
+            padding: 10px 20px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .text-danger {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+    <h1> Acceso a Finanzas Personales</h1>
+        <form action="php/login.php" method="POST">
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+        <p id="error-message" class="text-danger mt-3">
+        </p>
+    </div>
+</body>
+</html>
