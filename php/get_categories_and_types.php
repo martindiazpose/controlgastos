@@ -32,6 +32,11 @@ try {
         }
     }
 
+    // Agregar mensaje de depuración
+    if (empty($categories)) {
+        error_log("No se encontraron categorías para el tipo: " . $type);
+    }
+
     echo json_encode(['status' => 'success', 'categories' => $categories]);
 } catch (Exception $e) {
     echo json_encode(['status' => 'error', 'error' => $e->getMessage()]);

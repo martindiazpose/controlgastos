@@ -61,15 +61,21 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const response = await fetch(`./php/get_categories_and_types.php?type=${type}`);
             const data = await response.json();
-
+    
+            console.log(data);  // Agregar esta línea para depurar
+    
             if (data.status === 'success' && Array.isArray(data.categories)) {
                 categorySelect.innerHTML = '<option value="">Seleccionar</option>';
-                data.categories.forEach(category => {
-                    const option = document.createElement("option");
-                    option.value = category.nombre; // Usamos el nombre para la selección
-                    option.textContent = category.nombre;
-                    categorySelect.appendChild(option);
-                });
+                if (data.categories.length === 0) {
+                    console.warn(`No se encontraron categorías para el tipo: ${type}`);
+                } else {
+                    data.categories.forEach(category => {
+                        const option = document.createElement("option");
+                        option.value = category.nombre; // Usamos el nombre para la selección
+                        option.textContent = category.nombre;
+                        categorySelect.appendChild(option);
+                    });
+                }
             } else {
                 console.error('Error al cargar categorías:', data.error);
                 categorySelect.innerHTML = '<option value="">Error al cargar categorías</option>';

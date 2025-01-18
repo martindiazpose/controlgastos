@@ -26,3 +26,4 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_categories_and_types.php on line 17
+[18-Jan-2025 18:39:04 America/Montevideo] No se encontraron categorías para el tipo: ingreso
