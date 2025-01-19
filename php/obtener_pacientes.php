@@ -20,17 +20,18 @@ try {
 
     $stmt->bind_param('s', $type);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->bind_result($id, $nombre);
 
     $patients = [];
-    while ($row = $result->fetch_assoc()) {
-        $patients[] = $row;
+    while ($stmt->fetch()) {
+        $patients[] = ['id' => $id, 'nombre' => $nombre];
     }
 
     echo json_encode(['status' => 'success', 'patients' => $patients]);
 } catch (Exception $e) {
     echo json_encode(['status' => 'error', 'error' => $e->getMessage()]);
 } finally {
+    $stmt->close();
     $conn->close();
 }
 ?>
