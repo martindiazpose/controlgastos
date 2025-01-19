@@ -98,3 +98,12 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 18
+[18-Jan-2025 21:22:25 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:22:25 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:25:34 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:25:34 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:25:39 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php:23
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(23): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 23

@@ -5,17 +5,22 @@ $response = ['status' => 'error'];
 
 try {
     $tipo = $_POST['type'] ?? '';
-    $categoria_id = $_POST['category'] ?? 0;
+    $categoria = $_POST['category'] ?? '';
     $monto = $_POST['amount'] ?? 0;
     $fecha = date('Y-m-d');
-    $paciente_id = $_POST['patient'] ?? null;
+    $paciente = $_POST['patient'] ?? null;
     $comentarios = $_POST['comments'] ?? '';
 
     // Validar los datos
-    if (!empty($tipo) && $categoria_id > 0 && $monto > 0) {
-        $query = "INSERT INTO transacciones (tipo, categoria_id, monto, fecha, paciente_id, comentarios) VALUES (?, ?, ?, ?, ?, ?)";
+    if (!empty($tipo) && !empty($categoria) && $monto > 0) {
+        $query = "INSERT INTO transacciones (tipo, categoria, monto, fecha, paciente, comentarios) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sidiss", $tipo, $categoria_id, $monto, $fecha, $paciente_id, $comentarios);
+
+        if (!$stmt) {
+            throw new Exception("Error preparando la consulta: " . $conn->error);
+        }
+
+        $stmt->bind_param("ssds", $tipo, $categoria, $monto, $fecha, $paciente, $comentarios);
 
         if ($stmt->execute()) {
             $response = ['status' => 'success'];
