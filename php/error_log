@@ -107,3 +107,43 @@ Stack trace:
 #0 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(23): mysqli_stmt->bind_param()
 #1 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 23
+[18-Jan-2025 21:27:39 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:27:39 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:27:45 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php:24
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(24): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 24
+[18-Jan-2025 21:28:51 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:28:51 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:28:58 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php:24
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(24): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 24
+[18-Jan-2025 21:29:21 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php:24
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(24): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 24
+[18-Jan-2025 21:30:39 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:30:40 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:35:25 America/Montevideo] Tipo recibido: semanal
+[18-Jan-2025 21:35:25 America/Montevideo] Tipo recibido: semanal
+[18-Jan-2025 21:37:19 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:37:19 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:37:26 America/Montevideo] Fecha asignada: 2025-01-18
+[18-Jan-2025 21:44:13 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 21:44:13 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 22:10:33 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 22:10:33 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 22:10:56 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 22:10:56 America/Montevideo] Tipo recibido: mensual
+[18-Jan-2025 22:11:07 America/Montevideo] Tipo recibido: semanal
+[18-Jan-2025 22:11:07 America/Montevideo] Tipo recibido: semanal
+[18-Jan-2025 22:11:21 America/Montevideo] Tipo recibido: semanal
+[18-Jan-2025 22:11:21 America/Montevideo] Tipo recibido: semanal
+[18-Jan-2025 22:11:26 America/Montevideo] Fecha asignada: 2025-01-18
+[18-Jan-2025 23:18:31 America/Montevideo] Fecha asignada: 2025-01-18
+[18-Jan-2025 23:31:32 America/Montevideo] Fecha asignada: 2025-01-18
+[18-Jan-2025 23:32:46 America/Montevideo] Fecha asignada: 2025-01-18

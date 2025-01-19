@@ -7,9 +7,12 @@ try {
     $tipo = $_POST['type'] ?? '';
     $categoria = $_POST['category'] ?? '';
     $monto = $_POST['amount'] ?? 0;
-    $fecha = date('Y-m-d');
+    $fecha = date('Y-m-d'); // Tomar la fecha actual
     $paciente = $_POST['patient'] ?? null;
     $comentarios = $_POST['comments'] ?? '';
+
+    // Agregar depuración para verificar la fecha
+    error_log("Fecha asignada: " . $fecha);
 
     // Validar los datos
     if (!empty($tipo) && !empty($categoria) && $monto > 0) {
@@ -20,7 +23,8 @@ try {
             throw new Exception("Error preparando la consulta: " . $conn->error);
         }
 
-        $stmt->bind_param("ssds", $tipo, $categoria, $monto, $fecha, $paciente, $comentarios);
+        // Corregir la cadena de tipo para que coincida con todas las variables
+        $stmt->bind_param("ssssss", $tipo, $categoria, $monto, $fecha, $paciente, $comentarios);
 
         if ($stmt->execute()) {
             $response = ['status' => 'success'];

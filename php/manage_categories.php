@@ -5,49 +5,65 @@ $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 $response = ['status' => 'error'];
 
-switch ($action) {
-    case 'add':
-        $nombre = $_POST['name'];
-        $tipo = $_POST['type'];
-        $query = "INSERT INTO categorias (nombre, tipo) VALUES (?, ?)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("ss", $nombre, $tipo);
-        if ($stmt->execute()) {
-            $response = ['status' => 'success'];
-        } else {
-            $response['error'] = $stmt->error;
-        }
-        $stmt->close();
-        break;
-
-    case 'delete':
-        $id = $_POST['id'];
-        $query = "DELETE FROM categorias WHERE id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
-            $response = ['status' => 'success'];
-        } else {
-            $response['error'] = $stmt->error;
-        }
-        $stmt->close();
-        break;
-
-    case 'list':
-        $query = "SELECT * FROM categorias";
-        $result = $conn->query($query);
-        if ($result) {
-            $categories = [];
-            while ($row = $result->fetch_assoc()) {
-                $categories[] = $row;
+try {
+    switch ($action) {
+        case 'add':
+            $nombre = $_POST['name'];
+            $tipo = $_POST['type'];
+            $query = "INSERT INTO categorias (nombre, tipo) VALUES (?, ?)";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new Exception("Error preparando la consulta: " . $conn->error);
             }
-            echo json_encode($categories);
-            exit;
-        } else {
-            $response['error'] = $conn->error;
-        }
-        break;
+            $stmt->bind_param("ss", $nombre, $tipo);
+            if ($stmt->execute()) {
+                $response = ['status' => 'success'];
+            } else {
+                $response['error'] = $stmt->error;
+            }
+            $stmt->close();
+            break;
+
+        case 'delete':
+            $id = $_POST['id'];
+            $query = "DELETE FROM categorias WHERE id = ?";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new Exception("Error preparando la consulta: " . $conn->error);
+            }
+            $stmt->bind_param("i", $id);
+            if ($stmt->execute()) {
+                $response = ['status' => 'success'];
+            } else {
+                $response['error'] = $stmt->error;
+            }
+            $stmt->close();
+            break;
+
+        case 'list':
+            $query = "SELECT * FROM categorias";
+            $result = $conn->query($query);
+            if ($result) {
+                $categories = [];
+                while ($row = $result->fetch_assoc()) {
+                    $categories[] = $row;
+                }
+                echo json_encode($categories);
+                exit;
+            } else {
+                $response['error'] = $conn->error;
+            }
+            break;
+
+        default:
+            $response['error'] = 'Acción no válida.';
+            break;
+    }
+} catch (Exception $e) {
+    $response['error'] = 'Error: ' . $e->getMessage();
 }
 
 echo json_encode($response);
+
+$conn->close();
 ?>
