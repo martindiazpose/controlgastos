@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="../img/carpeta.png" type="image/x-icon">
+    <style>
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .chart-wrapper {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .chart-wrapper canvas {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-wrapper {
+                max-width: 45%;
+            }
+        }
+    </style>
+</head>
+<body class="container">
+    <h1>Dashboard de Finanzas Personales</h1>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <h3>Ingresos vs Egresos</h3>
+            <canvas id="income-expense-chart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h3>Egresos por Categoría</h3>
+            <canvas id="expense-category-chart" width="400" height="400"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <h3>Ingresos por Categoría</h3>
+            <canvas id="income-category-chart" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/scripts.js"></script>
+</body>
+</html>

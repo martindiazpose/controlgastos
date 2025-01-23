@@ -5,13 +5,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const typeSelect = document.getElementById('type');
     const patientField = document.getElementById('patient-field');
     const patientSelect = document.getElementById('patient');
+    const filterCategorySelect = document.getElementById('filter-category');
+    const filterMonthElement = document.getElementById('filter-month');
+    const filterTypeElement = document.getElementById('filter-type');
+    const paginationContainer = document.getElementById('pagination-container');
 
-    // Event listener for finance form submission
+    // Asegúrate de que los elementos existen antes de agregar event listeners
     if (financeForm) {
         financeForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const formData = new FormData(financeForm);
-
             fetch('./php/add_transaction.php', {
                 method: 'POST',
                 body: formData
@@ -29,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Event listener for filter form submission
     if (filterForm) {
         filterForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -37,24 +39,26 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Load categories based on type selection
-    typeSelect.addEventListener('change', function () {
-        const type = typeSelect.value.toLowerCase();
-        loadCategoriesByType(type);
-    });
+    if (typeSelect) {
+        typeSelect.addEventListener('change', function () {
+            const type = typeSelect.value.toLowerCase();
+            loadCategoriesByType(type);
+        });
+    }
 
-    // Load patients based on category selection
-    categorySelect.addEventListener('change', function () {
-        const category = categorySelect.selectedOptions[0]?.textContent || '';
-        if (category.includes('Paciente')) {
-            const type = category.includes('Mensual') ? 'mensual' : 'semanal';
-            patientField.style.display = 'block';
-            loadPatients(type);
-        } else {
-            patientField.style.display = 'none';
-            patientSelect.innerHTML = "";
-        }
-    });
+    if (categorySelect) {
+        categorySelect.addEventListener('change', function () {
+            const category = categorySelect.selectedOptions[0]?.textContent || '';
+            if (category.includes('Paciente')) {
+                const type = category.includes('Mensual') ? 'mensual' : 'semanal';
+                patientField.style.display = 'block';
+                loadPatients(type);
+            } else {
+                patientField.style.display = 'none';
+                patientSelect.innerHTML = "";
+            }
+        });
+    }
 
     // Load categories by type
     async function loadCategoriesByType(type) {
@@ -62,20 +66,14 @@ document.addEventListener('DOMContentLoaded', function () {
             const response = await fetch(`./php/get_categories_and_types.php?type=${type}`);
             const data = await response.json();
     
-            console.log(data);  // Agregar esta línea para depurar
-    
             if (data.status === 'success' && Array.isArray(data.categories)) {
                 categorySelect.innerHTML = '<option value="">Seleccionar</option>';
-                if (data.categories.length === 0) {
-                    console.warn(`No se encontraron categorías para el tipo: ${type}`);
-                } else {
-                    data.categories.forEach(category => {
-                        const option = document.createElement("option");
-                        option.value = category.nombre; // Usamos el nombre para la selección
-                        option.textContent = category.nombre;
-                        categorySelect.appendChild(option);
-                    });
-                }
+                data.categories.forEach(category => {
+                    const option = document.createElement("option");
+                    option.value = category.nombre;
+                    option.textContent = category.nombre;
+                    categorySelect.appendChild(option);
+                });
             } else {
                 console.error('Error al cargar categorías:', data.error);
                 categorySelect.innerHTML = '<option value="">Error al cargar categorías</option>';
@@ -95,26 +93,24 @@ document.addEventListener('DOMContentLoaded', function () {
             if (data.status === 'success' && Array.isArray(data.categories)) {
                 typeSelect.innerHTML = '<option value="">Seleccionar</option>';
                 categorySelect.innerHTML = '<option value="">Seleccionar</option>';
-
                 typeSelect.innerHTML += '<option value="Ingreso">Ingreso</option><option value="Egreso">Egreso</option>';
-
-                data.categories.forEach(category => {
-                    const option = document.createElement("option");
-                    option.value = category.nombre; // Usamos el nombre para la selección
-                    option.textContent = category.nombre;
-                    categorySelect.appendChild(option);
-                });
-
-                // Cargar opciones de filtrado de categorías
-                const filterCategorySelect = document.getElementById('filter-category');
-                filterCategorySelect.innerHTML = '<option value="">Todas</option>';
                 data.categories.forEach(category => {
                     const option = document.createElement("option");
                     option.value = category.nombre;
                     option.textContent = category.nombre;
-                    filterCategorySelect.appendChild(option);
+                    categorySelect.appendChild(option);
                 });
 
+                // Cargar opciones de filtrado de categorías si existen en el DOM
+                if (filterCategorySelect) {
+                    filterCategorySelect.innerHTML = '<option value="">Todas</option>';
+                    data.categories.forEach(category => {
+                        const option = document.createElement("option");
+                        option.value = category.nombre;
+                        option.textContent = category.nombre;
+                        filterCategorySelect.appendChild(option);
+                    });
+                }
             } else {
                 console.error('Error al cargar categorías y tipos:', data.error);
                 categorySelect.innerHTML = '<option value="">Error al cargar categorías y tipos</option>';
@@ -128,18 +124,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Load patients based on the type (mensual o semanal)
     async function loadPatients(type) {
         try {
-            // Asegurarse de que el tipo está siendo pasado en la URL
             const response = await fetch(`./php/obtener_pacientes.php?type=${type}`);
             const data = await response.json();
-    
-            // Agregar un console.log para depurar la respuesta
-            console.log(data);
     
             if (data.status === 'success' && Array.isArray(data.patients)) {
                 patientSelect.innerHTML = '<option value="">Seleccionar</option>';
                 data.patients.forEach(patient => {
                     const option = document.createElement("option");
-                    option.value = patient.nombre; // Usamos el nombre para la selección
+                    option.value = patient.nombre;
                     option.textContent = patient.nombre;
                     patientSelect.appendChild(option);
                 });
@@ -153,19 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
-    // Verificar que esta función se llama correctamente cuando se selecciona una categoría
-    categorySelect.addEventListener('change', function () {
-        const category = categorySelect.selectedOptions[0]?.textContent || '';
-        if (category.includes('Paciente')) {
-            const type = category.includes('Mensual') ? 'mensual' : 'semanal';
-            patientField.style.display = 'block';
-            loadPatients(type); // Aquí es donde se pasa el parámetro `type`
-        } else {
-            patientField.style.display = 'none';
-            patientSelect.innerHTML = "";
-        }
-    });
-
     // Show modal with message
     function showModal(title, message) {
         const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
@@ -181,18 +160,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fetch transactions based on filters
     function fetchTransactions(page = 1) {
-        const filterMonthElement = document.getElementById('filter-month');
-        const filterTypeElement = document.getElementById('filter-type');
-        const filterCategoryElement = document.getElementById('filter-category');
-
-        if (!filterMonthElement || !filterTypeElement || !filterCategoryElement) {
+        if (!filterMonthElement || !filterTypeElement || !filterCategorySelect) {
             console.error('Elementos de filtro no encontrados en el DOM.');
             return;
         }
 
         const filterMonth = filterMonthElement.value || new Date().toISOString().slice(0, 7);
         const filterType = filterTypeElement.value;
-        const filterCategory = filterCategoryElement.value;
+        const filterCategory = filterCategorySelect.value;
 
         const params = new URLSearchParams({
             month: filterMonth,
@@ -399,18 +374,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const totalIncome = transactions.filter(item => item.tipo === 'Ingreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
         const totalExpense = transactions.filter(item => item.tipo === 'Egreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
         const totalSavings = transactions.filter(item => item.categoria === 'Ahorros' && item.tipo === 'Ingreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
+        const totalSavingsExpense = transactions.filter(item => item.categoria === 'Ahorros' && item.tipo === 'Egreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
 
-        const balance = totalIncome - totalExpense;
+        // Ajustar balances
+        const balance = totalIncome - totalExpense - totalSavings + totalSavingsExpense;
+        const savings = totalSavings - totalSavingsExpense;
 
         document.getElementById('total-income').innerText = totalIncome.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
         document.getElementById('total-expense').innerText = totalExpense.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
         document.getElementById('total-balance').innerText = balance.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
-        document.getElementById('total-savings').innerText = totalSavings.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+        document.getElementById('total-savings').innerText = savings.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
     }
 
     // Render pagination
     function renderPagination(currentPage, totalPages) {
-        const paginationContainer = document.getElementById('pagination-container');
         if (!paginationContainer) return;
 
         paginationContainer.innerHTML = '';
