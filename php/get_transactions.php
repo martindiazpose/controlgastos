@@ -11,10 +11,21 @@ try {
     $limit = 10;
     $offset = ($page - 1) * $limit;
 
-    $query = "SELECT t.id, t.tipo, t.categoria, t.monto, t.fecha, t.paciente, t.comentarios, t.moneda, c.nombre as categoria
-              FROM transacciones t 
-              LEFT JOIN categorias c ON t.categoria = c.nombre
-              WHERE DATE_FORMAT(t.fecha, '%Y-%m') = ?";
+    // Actualizar la consulta para obtener nombres de categoría y subcategoría
+    $query = "
+        SELECT 
+            t.id, t.tipo, t.monto, t.fecha, t.paciente, t.comentarios, t.moneda, 
+            c.nombre AS categoria_nombre, 
+            s.nombre AS subcategoria_nombre
+        FROM 
+            transacciones t
+        LEFT JOIN 
+            categorias c ON t.categoria = c.id
+        LEFT JOIN 
+            subcategorias s ON t.subcategoria = s.id
+        WHERE 
+            DATE_FORMAT(t.fecha, '%Y-%m') = ?
+    ";
 
     $params = [$month];
     $types = 's';
@@ -43,7 +54,7 @@ try {
 
     $stmt->bind_param($types, ...$params);
     $stmt->execute();
-    $stmt->bind_result($id, $tipo, $categoria, $monto, $fecha, $paciente, $comentarios, $moneda, $categoriaNombre);
+    $stmt->bind_result($id, $tipo, $monto, $fecha, $paciente, $comentarios, $moneda, $categoriaNombre, $subcategoriaNombre);
     
     $transactions = [];
     while ($stmt->fetch()) {
@@ -51,6 +62,7 @@ try {
             'id' => $id,
             'tipo' => $tipo,
             'categoria' => $categoriaNombre,
+            'subcategoria' => $subcategoriaNombre,
             'monto' => $monto,
             'fecha' => $fecha,
             'paciente' => $paciente,

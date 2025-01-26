@@ -222,3 +222,21 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php on line 52
+[26-Jan-2025 14:29:48 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_subcategories.php:16
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_subcategories.php on line 16
+[26-Jan-2025 14:36:32 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_subcategories.php:16
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_subcategories.php on line 16
+[26-Jan-2025 14:37:16 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_subcategories.php:16
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_subcategories.php on line 16
+[26-Jan-2025 14:38:37 America/Montevideo] Fecha asignada: 2025-01-26
+[26-Jan-2025 14:56:12 America/Montevideo] Fecha asignada: 2025-01-26
+[26-Jan-2025 14:58:58 America/Montevideo] Fecha asignada: 2025-01-26
+[26-Jan-2025 15:00:49 America/Montevideo] Fecha asignada: 2025-01-26
+[26-Jan-2025 15:21:31 America/Montevideo] Tipo recibido: mensual
+[26-Jan-2025 15:21:46 America/Montevideo] Tipo recibido: semanal

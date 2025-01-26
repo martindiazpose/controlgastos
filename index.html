@@ -161,12 +161,12 @@
 </head>
 <body class="container">
     <div class="d-flex justify-content-between align-items-center my-4">
-        <h1>Finanzas Personales</h1>
+        <h1 class="text-center w-100">Finanzas Personales</h1>
         <div class="dropdown">
             <button class="btn btn-secondary dropbtn">Perfil</button>
             <div class="dropdown-content">
                 <a href="perfil.php">Perfil</a>
-                <a href="assets/pages/admin_panel.html">Gestion Clientes</a>
+                <a href="assets/pages/admin_panel.html">Adm Usuario</a>
                 <a href="assets/pages/dashboard.html">Dashboard</a>
                 <a href="php/logout.php" class="text-danger">Salir</a>
             </div>
@@ -191,41 +191,45 @@
         </div>
     </div>
 
-<!-- Formulario de ingreso de transacciones -->
-<form id="finance-form" class="form-inline mb-4">
-    <div class="form-group mr-2">
-        <label for="type" class="mr-2">Tipo:</label>
-        <select id="type" name="type" class="form-control" required>
-            <option value="">Seleccionar</option>
-            <option value="Ingreso">Ingreso</option>
-            <option value="Egreso">Egreso</option>
-        </select>
-    </div>
-    <div class="form-group mr-2">
-        <label for="category" class="mr-2">Categoría:</label>
-        <select id="category" name="category" class="form-control" required>
-            <option value="">Seleccionar</option>
-            <!-- Opciones serán cargadas dinámicamente -->
-        </select>
-    </div>
-    <div id="patient-field" class="form-group mr-2" style="display: none;">
-        <label for="patient" class="mr-2">Paciente:</label>
-        <select id="patient" name="patient" class="form-control"></select>
-    </div>
-    <div class="form-group mr-2">
-        <label for="amount" class="mr-2">Monto:</label>
-        <input type="number" id="amount" name="amount" step="0.01" required>
-    </div>
-    <div class="form-group mr-2">
-        <label for="comments" class="mr-2">Comentarios:</label>
-        <input type="text" id="comments" name="comments" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">Agregar</button>
-</form>
+    <!-- Formulario de ingreso de transacciones -->
+    <form id="finance-form" class="form-inline mb-4">
+        <div class="form-group mr-2">
+            <label for="type" class="mr-2">Tipo:</label>
+            <select id="type" name="type" class="form-control" required>
+                <option value="">Seleccionar</option>
+                <option value="Ingreso">Ingreso</option>
+                <option value="Egreso">Egreso</option>
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <label for="category" class="mr-2">Categoría:</label>
+            <select id="category" name="category" class="form-control" required>
+                <option value="">Seleccionar</option>
+                <!-- Opciones serán cargadas dinámicamente -->
+            </select>
+        </div>
+        <div id="subcategory-field" class="form-group mr-2" style="display: none;">
+            <label for="subcategory" class="mr-2">Subcategoría:</label>
+            <select id="subcategory" name="subcategory" class="form-control"></select>
+        </div>
+        <div id="patient-field" class="form-group mr-2" style="display: none;">
+            <label for="patient" class="mr-2">Paciente:</label>
+            <select id="patient" name="patient" class="form-control"></select>
+        </div>
+        <div class="form-group mr-2">
+            <label for="amount" class="mr-2">Monto:</label>
+            <input type="number" id="amount" name="amount" step="0.01" required>
+        </div>
+        <div class="form-group mr-2">
+            <label for="comments" class="mr-2">Comentarios:</label>
+            <input type="text" id="comments" name="comments" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
 
     <!-- Formulario de filtrado -->
-    <h2 class="my-4">Filtrar Transacciones</h2>
-    <h3 class="my-4">Si es traspaso "Ahorros" poner como "Egreso" si es quita de ahorros poner como "Ingreso"</h3>
+    <h2 class="text-center my-4">Filtrar Transacciones</h2>
+   <!-- <h3 class="my-4">Si es traspaso "Ahorros" poner como "Egreso" si es quita de ahorros poner como "Ingreso"</h3>-->
     <form id="filter-form" class="form-inline mb-4">
         <div class="form-group mr-2">
             <label for="filter-month" class="mr-2">Mes:</label>
@@ -270,30 +274,35 @@
     </div>
 
     <!-- Tabla de transacciones -->
-    <h2 class="my-4">Transacciones</h2>
+    <h2 class="text-center my-4">Transacciones</h2>
     <table id="transactions-table" class="table table-striped">
         <thead>
             <tr>
                 <th>Fecha</th>
                 <th>Tipo</th>
                 <th>Categoría</th>
+                <th>Subcategoría</th>
                 <th>Monto (UYU)</th>
                 <th>Comentarios</th>
                 <th>Detalle</th>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+            <!-- Las filas de transacciones se agregarán aquí -->
+        </tbody>
     </table>
 
     <!-- Paginación -->
     <div id="pagination-container" class="mb-4"></div>
 
     <!-- Gráficos -->
-    <h2 class="my-4">Gráficos</h2>
+    <h2 class="text-center my-4">Gráficos</h2>
     <div class="chart-container">
         <canvas id="income-expense-chart" width="400" height="400"></canvas>
         <canvas id="expense-category-chart" width="400" height="400"></canvas>
         <canvas id="income-category-chart" width="400" height="400"></canvas>
+        <canvas id="subcategory-gastos-fijos-chart" width="400" height="400"></canvas>
+        <canvas id="subcategory-comida-chart" width="400" height="400"></canvas>
     </div>
 
     <!-- Scripts -->

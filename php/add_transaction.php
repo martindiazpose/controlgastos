@@ -6,17 +6,15 @@ $response = ['status' => 'error'];
 try {
     $tipo = $_POST['type'] ?? '';
     $categoria = $_POST['category'] ?? '';
+    $subcategoria = $_POST['subcategory'] ?? null;
     $monto = $_POST['amount'] ?? 0;
     $fecha = date('Y-m-d'); // Tomar la fecha actual
     $paciente = $_POST['patient'] ?? null;
     $comentarios = $_POST['comments'] ?? '';
 
-    // Agregar depuración para verificar la fecha
-    error_log("Fecha asignada: " . $fecha);
-
     // Validar los datos
     if (!empty($tipo) && !empty($categoria) && $monto > 0) {
-        $query = "INSERT INTO transacciones (tipo, categoria, monto, fecha, paciente, comentarios) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO transacciones (tipo, categoria, subcategoria, monto, fecha, paciente, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
 
         if (!$stmt) {
@@ -24,7 +22,7 @@ try {
         }
 
         // Corregir la cadena de tipo para que coincida con todas las variables
-        $stmt->bind_param("ssssss", $tipo, $categoria, $monto, $fecha, $paciente, $comentarios);
+        $stmt->bind_param("sssssss", $tipo, $categoria, $subcategoria, $monto, $fecha, $paciente, $comentarios);
 
         if ($stmt->execute()) {
             $response = ['status' => 'success'];
