@@ -23,12 +23,12 @@
         .section {
             margin: 20px 0;
         }
-        .input-group {
+        .input-group, .filter-group {
             margin: 20px auto;
             max-width: 600px;
         }
         .list-group {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 20px auto;
         }
         .list-group-item {
@@ -112,20 +112,25 @@
                         <button id="add-income-category" class="btn btn-primary">Agregar Categoría</button>
                     </div>
                 </div>
-                <ul id="income-category-list" class="list-group"></ul>
+                <div class="filter-group mb-3">
+                    <input type="text" id="search-income-category" class="form-control" placeholder="Buscar categoría">
+                </div>
+                <div class="row" id="income-category-list"></div>
 
                 <h2>Gestión de Subcategorías de Ingresos</h2>
                 <div class="input-group mb-3">
                     <input type="text" id="income-subcategory-name" class="form-control" placeholder="Nombre de la subcategoría">
                     <select id="income-subcategory-category" class="form-control">
                         <option disabled selected>Seleccionar categoría...</option>
-                        <!-- Las categorías se cargarán dinámicamente desde el servidor -->
                     </select>
                     <div class="input-group-append">
                         <button id="add-income-subcategory" class="btn btn-primary">Agregar Subcategoría</button>
                     </div>
                 </div>
-                <ul id="income-subcategory-list" class="list-group"></ul>
+                <div class="filter-group mb-3">
+                    <input type="text" id="search-income-subcategory" class="form-control" placeholder="Buscar subcategoría">
+                </div>
+                <div class="row" id="income-subcategory-list"></div>
             </div>
         </div>
 
@@ -139,20 +144,25 @@
                         <button id="add-expense-category" class="btn btn-primary">Agregar Categoría</button>
                     </div>
                 </div>
-                <ul id="expense-category-list" class="list-group"></ul>
+                <div class="filter-group mb-3">
+                    <input type="text" id="search-expense-category" class="form-control" placeholder="Buscar categoría">
+                </div>
+                <div class="row" id="expense-category-list"></div>
 
                 <h2>Gestión de Subcategorías de Egresos</h2>
                 <div class="input-group mb-3">
                     <input type="text" id="expense-subcategory-name" class="form-control" placeholder="Nombre de la subcategoría">
                     <select id="expense-subcategory-category" class="form-control">
                         <option disabled selected>Seleccionar categoría...</option>
-                        <!-- Las categorías se cargarán dinámicamente desde el servidor -->
                     </select>
                     <div class="input-group-append">
                         <button id="add-expense-subcategory" class="btn btn-primary">Agregar Subcategoría</button>
                     </div>
                 </div>
-                <ul id="expense-subcategory-list" class="list-group"></ul>
+                <div class="filter-group mb-3">
+                    <input type="text" id="search-expense-subcategory" class="form-control" placeholder="Buscar subcategoría">
+                </div>
+                <div class="row" id="expense-subcategory-list"></div>
             </div>
         </div>
 
@@ -172,13 +182,16 @@
                     </div>
                 </div>
                 <div class="filter-group mb-3">
+                    <input type="text" id="search-patient" class="form-control" placeholder="Buscar paciente">
+                </div>
+                <div class="filter-group mb-3">
                     <select id="filter-type" class="form-control">
                         <option value="all">Todos</option>
                         <option value="mensual">Mensuales</option>
                         <option value="semanal">Semanales</option>
                     </select>
                 </div>
-                <ul id="patient-list" class="list-group"></ul>
+                <div class="row" id="patient-list"></div>
             </div>
         </div>
     </div>
@@ -219,236 +232,247 @@
             </div>
         </div>
     </div>
-
- <!-- Scripts -->
- <script>
+<!-- Scripts -->
+<script>
     $(document).ready(function() {
+        // Cargar categorías y subcategorías
         loadIncomeCategories();
         loadExpenseCategories();
         loadIncomeSubcategories();
         loadExpenseSubcategories();
         loadPatients();
 
+        // Añadir categoría de ingresos
         $('#add-income-category').click(function() {
             let name = $('#income-category-name').val().trim();
             if (name) {
-                $.post('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'add', name: name, type: 'ingreso' }, function(response) {
+                $.post('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'add', name: name, type: 'income' }, function(response) {
                     if (response.status === 'success') {
-                        $('#modalMessage').text(`Categoría ${name} agregada correctamente.`);
+                        $('#modalMessage').text(`Category ${name} added successfully.`);
                     } else {
-                        $('#modalMessage').text(`Error al agregar categoría: ${response.error}`);
+                        $('#modalMessage').text(`Error adding category: ${response.error}`);
                     }
                     $('#messageModal').modal('show');
                     loadIncomeCategories();
                     $('#income-category-name').val('');
                 }, 'json').fail(function() {
-                    $('#modalMessage').text('Error al agregar categoría. Intente más tarde.');
+                    $('#modalMessage').text('Error adding category. Please try again later.');
                     $('#messageModal').modal('show');
                 });
             } else {
-                $('#modalMessage').text('Por favor, completa todos los campos correctamente.');
+                $('#modalMessage').text('Please complete all fields correctly.');
                 $('#messageModal').modal('show');
             }
         });
 
+        // Añadir categoría de egresos
         $('#add-expense-category').click(function() {
             let name = $('#expense-category-name').val().trim();
             if (name) {
-                $.post('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'add', name: name, type: 'egreso' }, function(response) {
+                $.post('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'add', name: name, type: 'expense' }, function(response) {
                     if (response.status === 'success') {
-                        $('#modalMessage').text(`Categoría ${name} agregada correctamente.`);
+                        $('#modalMessage').text(`Category ${name} added successfully.`);
                     } else {
-                        $('#modalMessage').text(`Error al agregar categoría: ${response.error}`);
+                        $('#modalMessage').text(`Error adding category: ${response.error}`);
                     }
                     $('#messageModal').modal('show');
                     loadExpenseCategories();
                     $('#expense-category-name').val('');
                 }, 'json').fail(function() {
-                    $('#modalMessage').text('Error al agregar categoría. Intente más tarde.');
+                    $('#modalMessage').text('Error adding category. Please try again later.');
                     $('#messageModal').modal('show');
                 });
             } else {
-                $('#modalMessage').text('Por favor, completa todos los campos correctamente.');
+                $('#modalMessage').text('Please complete all fields correctly.');
                 $('#messageModal').modal('show');
             }
         });
 
+        // Añadir subcategoría de ingresos
         $('#add-income-subcategory').click(function() {
             let name = $('#income-subcategory-name').val().trim();
             let categoryId = $('#income-subcategory-category').val();
             if (name && categoryId) {
                 $.post('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'add', name: name, category_id: categoryId }, function(response) {
                     if (response.status === 'success') {
-                        $('#modalMessage').text(`Subcategoría ${name} agregada correctamente.`);
+                        $('#modalMessage').text(`Subcategory ${name} added successfully.`);
                     } else {
-                        $('#modalMessage').text(`Error al agregar subcategoría: ${response.error}`);
+                        $('#modalMessage').text(`Error adding subcategory: ${response.error}`);
                     }
                     $('#messageModal').modal('show');
                     loadIncomeSubcategories();
                     $('#income-subcategory-name').val('');
                     $('#income-subcategory-category').val('');
                 }, 'json').fail(function() {
-                    $('#modalMessage').text('Error al agregar subcategoría. Intente más tarde.');
+                    $('#modalMessage').text('Error adding subcategory. Please try again later.');
                     $('#messageModal').modal('show');
                 });
             } else {
-                $('#modalMessage').text('Por favor, completa todos los campos correctamente.');
+                $('#modalMessage').text('Please complete all fields correctly.');
                 $('#messageModal').modal('show');
             }
         });
 
+        // Añadir subcategoría de egresos
         $('#add-expense-subcategory').click(function() {
             let name = $('#expense-subcategory-name').val().trim();
             let categoryId = $('#expense-subcategory-category').val();
             if (name && categoryId) {
                 $.post('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'add', name: name, category_id: categoryId }, function(response) {
                     if (response.status === 'success') {
-                        $('#modalMessage').text(`Subcategoría ${name} agregada correctamente.`);
+                        $('#modalMessage').text(`Subcategory ${name} added successfully.`);
                     } else {
-                        $('#modalMessage').text(`Error al agregar subcategoría: ${response.error}`);
+                        $('#modalMessage').text(`Error adding subcategory: ${response.error}`);
                     }
                     $('#messageModal').modal('show');
                     loadExpenseSubcategories();
                     $('#expense-subcategory-name').val('');
                     $('#expense-subcategory-category').val('');
                 }, 'json').fail(function() {
-                    $('#modalMessage').text('Error al agregar subcategoría. Intente más tarde.');
+                    $('#modalMessage').text('Error adding subcategory. Please try again later.');
                     $('#messageModal').modal('show');
                 });
             } else {
-                $('#modalMessage').text('Por favor, completa todos los campos correctamente.');
+                $('#modalMessage').text('Please complete all fields correctly.');
                 $('#messageModal').modal('show');
             }
         });
 
+        // Eliminar categoría
         $(document).on('click', '.delete-category', function() {
             let id = $(this).data('id');
             let name = $(this).data('name');
             $.post('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'delete', id: id }, function(response) {
                 if (response.status === 'success') {
-                    $('#modalMessage').text(`Categoría ${name} eliminada correctamente.`);
+                    $('#modalMessage').text(`Category ${name} deleted successfully.`);
                 } else {
-                    $('#modalMessage').text(`Error al eliminar categoría: ${response.error}`);
+                    $('#modalMessage').text(`Error deleting category: ${response.error}`);
                 }
                 $('#messageModal').modal('show');
                 loadIncomeCategories();
                 loadExpenseCategories();
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al eliminar categoría. Intente más tarde.');
+                $('#modalMessage').text('Error deleting category. Please try again later.');
                 $('#messageModal').modal('show');
             });
         });
 
+        // Eliminar subcategoría
         $(document).on('click', '.delete-subcategory', function() {
             let id = $(this).data('id');
             let name = $(this).data('name');
             $.post('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'delete', id: id }, function(response) {
                 if (response.status === 'success') {
-                    $('#modalMessage').text(`Subcategoría ${name} eliminada correctamente.`);
+                    $('#modalMessage').text(`Subcategory ${name} deleted successfully.`);
                 } else {
-                    $('#modalMessage').text(`Error al eliminar subcategoría: ${response.error}`);
+                    $('#modalMessage').text(`Error deleting subcategory: ${response.error}`);
                 }
                 $('#messageModal').modal('show');
                 loadIncomeSubcategories();
                 loadExpenseSubcategories();
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al eliminar subcategoría. Intente más tarde.');
+                $('#modalMessage').text('Error deleting subcategory. Please try again later.');
                 $('#messageModal').modal('show');
             });
         });
 
+        // Cargar categorías de ingresos
         function loadIncomeCategories() {
-            $.get('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'list', type: 'ingreso' }, function(response) {
+            $.get('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'list', type: 'income' }, function(response) {
                 let categoryList = $('#income-category-list');
                 let subcategoryCategorySelect = $('#income-subcategory-category');
                 categoryList.empty();
                 subcategoryCategorySelect.empty();
-                subcategoryCategorySelect.append('<option disabled selected>Seleccionar categoría...</option>');
+                subcategoryCategorySelect.append('<option disabled selected>Select category...</option>');
                 if (Array.isArray(response)) {
                     response.forEach(function(category) {
-                        categoryList.append(`<li class="list-group-item d-flex justify-content-between align-items-center">
+                        categoryList.append(`<div class="col-md-4"><div class="list-group-item d-flex justify-content-between align-items-center">
                             ${category.nombre}
-                            <button class="btn btn-danger btn-sm delete-category" data-id="${category.id}" data-name="${category.nombre}">Eliminar</button>
-                        </li>`);
+                            <button class="btn btn-danger btn-sm delete-category" data-id="${category.id}" data-name="${category.nombre}">Delete</button>
+                        </div></div>`);
                         subcategoryCategorySelect.append(`<option value="${category.id}">${category.nombre}</option>`);
                     });
                 } else {
-                    $('#modalMessage').text(`Error al cargar lista de categorías: ${response.error}`);
+                    $('#modalMessage').text(`Error loading category list: ${response.error}`);
                     $('#messageModal').modal('show');
                 }
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al cargar lista de categorías. Intente más tarde.');
+                $('#modalMessage').text('Error loading category list. Please try again later.');
                 $('#messageModal').modal('show');
             });
         }
 
+        // Cargar categorías de egresos
         function loadExpenseCategories() {
-            $.get('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'list', type: 'egreso' }, function(response) {
+            $.get('https://controlgastos.wantedstudio.uy/php/manage_categories.php', { action: 'list', type: 'expense' }, function(response) {
                 let categoryList = $('#expense-category-list');
                 let subcategoryCategorySelect = $('#expense-subcategory-category');
                 categoryList.empty();
                 subcategoryCategorySelect.empty();
-                subcategoryCategorySelect.append('<option disabled selected>Seleccionar categoría...</option>');
+                subcategoryCategorySelect.append('<option disabled selected>Select category...</option>');
                 if (Array.isArray(response)) {
                     response.forEach(function(category) {
-                        categoryList.append(`<li class="list-group-item d-flex justify-content-between align-items-center">
+                        categoryList.append(`<div class="col-md-4"><div class="list-group-item d-flex justify-content-between align-items-center">
                             ${category.nombre}
-                            <button class="btn btn-danger btn-sm delete-category" data-id="${category.id}" data-name="${category.nombre}">Eliminar</button>
-                        </li>`);
+                            <button class="btn btn-danger btn-sm delete-category" data-id="${category.id}" data-name="${category.nombre}">Delete</button>
+                        </div></div>`);
                         subcategoryCategorySelect.append(`<option value="${category.id}">${category.nombre}</option>`);
                     });
                 } else {
-                    $('#modalMessage').text(`Error al cargar lista de categorías: ${response.error}`);
+                    $('#modalMessage').text(`Error loading category list: ${response.error}`);
                     $('#messageModal').modal('show');
                 }
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al cargar lista de categorías. Intente más tarde.');
+                $('#modalMessage').text('Error loading category list. Please try again later.');
                 $('#messageModal').modal('show');
             });
         }
 
+        // Cargar subcategorías de ingresos
         function loadIncomeSubcategories() {
-            $.get('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'list', type: 'ingreso' }, function(response) {
+            $.get('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'list', type: 'income' }, function(response) {
                 let subcategoryList = $('#income-subcategory-list');
                 subcategoryList.empty();
                 if (Array.isArray(response)) {
                     response.forEach(function(subcategory) {
-                        subcategoryList.append(`<li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${subcategory.nombre} (Categoría: ${subcategory.categoria_nombre})
-                            <button class="btn btn-danger btn-sm delete-subcategory" data-id="${subcategory.id}" data-name="${subcategory.nombre}">Eliminar</button>
-                        </li>`);
+                        subcategoryList.append(`<div class="col-md-4"><div class="list-group-item d-flex justify-content-between align-items-center">
+                            ${subcategory.nombre} (Category: ${subcategory.categoria_nombre})
+                            <button class="btn btn-danger btn-sm delete-subcategory" data-id="${subcategory.id}" data-name="${subcategory.nombre}">Delete</button>
+                        </div></div>`);
                     });
                 } else {
-                    $('#modalMessage').text(`Error al cargar lista de subcategorías: ${response.error}`);
+                    $('#modalMessage').text(`Error loading subcategory list: ${response.error}`);
                     $('#messageModal').modal('show');
                 }
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al cargar lista de subcategorías. Intente más tarde.');
+                $('#modalMessage').text('Error loading subcategory list. Please try again later.');
                 $('#messageModal').modal('show');
             });
         }
 
+        // Cargar subcategorías de egresos
         function loadExpenseSubcategories() {
-            $.get('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'list', type: 'egreso' }, function(response) {
+            $.get('https://controlgastos.wantedstudio.uy/php/manage_subcategories.php', { action: 'list', type: 'expense' }, function(response) {
                 let subcategoryList = $('#expense-subcategory-list');
                 subcategoryList.empty();
                 if (Array.isArray(response)) {
                     response.forEach(function(subcategory) {
-                        subcategoryList.append(`<li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${subcategory.nombre} (Categoría: ${subcategory.categoria_nombre})
-                            <button class="btn btn-danger btn-sm delete-subcategory" data-id="${subcategory.id}" data-name="${subcategory.nombre}">Eliminar</button>
-                        </li>`);
+                        subcategoryList.append(`<div class="col-md-4"><div class="list-group-item d-flex justify-content-between align-items-center">
+                            ${subcategory.nombre} (Category: ${subcategory.categoria_nombre})
+                            <button class="btn btn-danger btn-sm delete-subcategory" data-id="${subcategory.id}" data-name="${subcategory.nombre}">Delete</button>
+                        </div></div>`);
                     });
                 } else {
-                    $('#modalMessage').text(`Error al cargar lista de subcategorías: ${response.error}`);
+                    $('#modalMessage').text(`Error loading subcategory list: ${response.error}`);
                     $('#messageModal').modal('show');
                 }
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al cargar lista de subcategorías. Intente más tarde.');
+                $('#modalMessage').text('Error loading subcategory list. Please try again later.');
                 $('#messageModal').modal('show');
             });
         }
 
+        // Cargar pacientes
         function loadPatients() {
             let filterType = $('#filter-type').val();
             $.get('https://controlgastos.wantedstudio.uy/php/manage_patients.php', { action: 'list', type: filterType }, function(response) {
@@ -456,17 +480,17 @@
                 patientList.empty();
                 if (Array.isArray(response)) {
                     response.forEach(function(patient) {
-                        patientList.append(`<li class="list-group-item d-flex justify-content-between align-items-center">
+                        patientList.append(`<div class="col-md-4"><div class="list-group-item d-flex justify-content-between align-items-center">
                             ${patient.nombre} (${patient.tipo})
-                            <button class="btn btn-danger btn-sm delete-patient" data-id="${patient.id}" data-name="${patient.nombre}" data-type="${patient.tipo}">Eliminar</button>
-                        </li>`);
+                            <button class="btn btn-danger btn-sm delete-patient" data-id="${patient.id}" data-name="${patient.nombre}" data-type="${patient.tipo}">Delete</button>
+                        </div></div>`);
                     });
                 } else {
-                    $('#modalMessage').text(`Error al cargar lista de pacientes: ${response.error}`);
+                    $('#modalMessage').text(`Error loading patient list: ${response.error}`);
                     $('#messageModal').modal('show');
                 }
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al cargar lista de pacientes. Intente más tarde.');
+                $('#modalMessage').text('Error loading patient list. Please try again later.');
                 $('#messageModal').modal('show');
             });
         }
@@ -475,11 +499,12 @@
             loadPatients();
         });
 
+        // Confirmar eliminación de paciente
         $(document).on('click', '.delete-patient', function() {
             let id = $(this).data('id');
             let name = $(this).data('name');
             let type = $(this).data('type');
-            $('#confirmDeleteModal .modal-body').text(`¿Está seguro que desea eliminar al paciente ${name} de la lista de pacientes ${type}?`);
+            $('#confirmDeleteModal .modal-body').text(`Are you sure you want to delete patient ${name} from the ${type} list?`);
             $('#confirmDeleteButton').data('id', id);
             $('#confirmDeleteButton').data('name', name);
             $('#confirmDeleteButton').data('type', type);
@@ -492,19 +517,44 @@
             let type = $(this).data('type');
             $.post('https://controlgastos.wantedstudio.uy/php/manage_patients.php', { action: 'delete', id: id }, function(response) {
                 if (response.status === 'success') {
-                    $('#modalMessage').text(`Paciente ${name} eliminado correctamente de la lista de ${type}.`);
+                    $('#modalMessage').text(`Patient ${name} deleted successfully from the ${type} list.`);
                 } else {
-                    $('#modalMessage').text(`Error al eliminar paciente: ${response.error}`);
+                    $('#modalMessage').text(`Error deleting patient: ${response.error}`);
                 }
                 $('#messageModal').modal('show');
                 loadPatients();
             }, 'json').fail(function() {
-                $('#modalMessage').text('Error al eliminar paciente. Intente más tarde.');
+                $('#modalMessage').text('Error deleting patient. Please try again later.');
                 $('#messageModal').modal('show');
             });
             $('#confirmDeleteModal').modal('hide');
         });
+
+        // Búsqueda en categorías de ingresos
+        $('#search-income-category').on('input', function() {
+            let search = $(this).val().toLowerCase();
+            $('#income-category-list .list-group-item').each(function() {
+                let item = $(this).text().toLowerCase();
+                $(this).toggle(item.indexOf(search) !== -1);
+            });
+        });
+
+        // Búsqueda en categorías de egresos
+        $('#search-expense-category').on('input', function() {
+            let search = $(this).val().toLowerCase();
+            $('#expense-category-list .list-group-item').each(function() {
+                let item = $(this).text().toLowerCase();
+                $(this).toggle(item.indexOf(search) !== -1);
+            });
+        });
+
+        // Búsqueda en lista de pacientes
+        $('#search-patient').on('input', function() {
+            let search = $(this).val().toLowerCase();
+            $('#patient-list .list-group-item').each(function() {
+                let item = $(this).text().toLowerCase();
+                $(this).toggle(item.indexOf(search) !== -1);
+            });
+        });
     });
 </script>
-</body>
-</html>

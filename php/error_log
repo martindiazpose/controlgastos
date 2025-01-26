@@ -206,3 +206,19 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 55
+[26-Jan-2025 14:14:19 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php:52
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php on line 52
+[26-Jan-2025 14:14:19 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php:52
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php on line 52
+[26-Jan-2025 14:14:33 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php:52
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php on line 52
+[26-Jan-2025 14:14:33 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php:52
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_categories.php on line 52

@@ -13,7 +13,7 @@ try {
             $query = "INSERT INTO categorias (nombre, tipo) VALUES (?, ?)";
             $stmt = $conn->prepare($query);
             if (!$stmt) {
-                throw new Exception("Error preparando la consulta: " . $conn->error);
+                throw new Exception("Error preparing the query: " . $conn->error);
             }
             $stmt->bind_param("ss", $nombre, $tipo);
             if ($stmt->execute()) {
@@ -29,7 +29,7 @@ try {
             $query = "DELETE FROM categorias WHERE id = ?";
             $stmt = $conn->prepare($query);
             if (!$stmt) {
-                throw new Exception("Error preparando la consulta: " . $conn->error);
+                throw new Exception("Error preparing the query: " . $conn->error);
             }
             $stmt->bind_param("i", $id);
             if ($stmt->execute()) {
@@ -41,22 +41,26 @@ try {
             break;
 
         case 'list':
-            $query = "SELECT * FROM categorias";
-            $result = $conn->query($query);
-            if ($result) {
-                $categories = [];
-                while ($row = $result->fetch_assoc()) {
-                    $categories[] = $row;
-                }
-                echo json_encode($categories);
-                exit;
-            } else {
-                $response['error'] = $conn->error;
+            $type = $_GET['type'];
+            $query = "SELECT id, nombre FROM categorias WHERE tipo = ?";
+            $stmt = $conn->prepare($query);
+            if (!$stmt) {
+                throw new Exception("Error preparing the query: " . $conn->error);
             }
-            break;
+            $stmt->bind_param("s", $type);
+            $stmt->execute();
+
+            // Usar bind_result en lugar de get_result
+            $stmt->bind_result($id, $nombre);
+            $categories = [];
+            while ($stmt->fetch()) {
+                $categories[] = ['id' => $id, 'nombre' => $nombre];
+            }
+            echo json_encode($categories);
+            exit;
 
         default:
-            $response['error'] = 'Acción no válida.';
+            $response['error'] = 'Invalid action.';
             break;
     }
 } catch (Exception $e) {
