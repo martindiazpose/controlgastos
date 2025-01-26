@@ -169,3 +169,40 @@ Stack trace:
 [23-Jan-2025 20:35:56 America/Montevideo] Fecha asignada: 2025-01-23
 [23-Jan-2025 20:36:33 America/Montevideo] Fecha asignada: 2025-01-23
 [23-Jan-2025 20:41:43 America/Montevideo] Tipo recibido: mensual
+[26-Jan-2025 12:49:47 America/Montevideo] PHP Warning:  include(db_connection.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 2
+[26-Jan-2025 12:49:47 America/Montevideo] PHP Warning:  include(): Failed opening 'db_connection.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 2
+[26-Jan-2025 12:49:47 America/Montevideo] PHP Warning:  Undefined variable $conn in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 18
+[26-Jan-2025 12:49:47 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function query() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:18
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 18
+[26-Jan-2025 12:50:22 America/Montevideo] PHP Warning:  include(db_connection.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 2
+[26-Jan-2025 12:50:22 America/Montevideo] PHP Warning:  include(): Failed opening 'db_connection.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 2
+[26-Jan-2025 12:50:22 America/Montevideo] PHP Warning:  Undefined variable $conn in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 9
+[26-Jan-2025 12:50:22 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:9
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 9
+[26-Jan-2025 12:50:41 America/Montevideo] PHP Warning:  include(db_connection.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 2
+[26-Jan-2025 12:50:41 America/Montevideo] PHP Warning:  include(): Failed opening 'db_connection.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 2
+[26-Jan-2025 12:50:41 America/Montevideo] PHP Warning:  Undefined variable $conn in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 9
+[26-Jan-2025 12:50:41 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:9
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 9
+[26-Jan-2025 13:03:17 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:55
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 55
+[26-Jan-2025 13:03:17 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:55
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 55
+[26-Jan-2025 13:03:29 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:55
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 55
+[26-Jan-2025 13:03:29 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to undefined method mysqli_stmt::get_result() in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php:55
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/manage_subcategories.php on line 55
