@@ -1,5 +1,6 @@
 <?php
 require 'conexion.php';
+require 'send_email.php'; // Incluir el archivo de la función de envío de correos
 
 $response = ['status' => 'error'];
 
@@ -26,6 +27,15 @@ try {
 
         if ($stmt->execute()) {
             $response = ['status' => 'success'];
+
+            // Datos del correo
+            $usuario = $_SESSION['usuario']; // Asegúrate de tener la sesión iniciada y el nombre de usuario disponible
+            $detalle = "Tipo: $tipo, Categoría: $categoria, Subcategoría: $subcategoria, Monto: $monto, Comentarios: $comentarios";
+            $asunto = "Nueva Transacción Agregada";
+            $mensaje = "La transacción ha sido agregada por: $usuario<br>Detalles de la transacción:<br>$detalle";
+
+            // Enviar el correo
+            enviarCorreo('martindiazpose@gmail.com', $asunto, $mensaje);
         } else {
             $response['error'] = $stmt->error;
         }
