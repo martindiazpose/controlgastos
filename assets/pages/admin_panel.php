@@ -82,20 +82,6 @@
             background-color: #6c757d;
             border-color: #6c757d;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f6d365;
-            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 15px;
-        }
         .dropdown-content a {
             color: white;
             padding: 12px 16px;
@@ -120,7 +106,7 @@
         <div class="dropdown">
             <button class="btn btn-secondary dropbtn">Perfil</button>
             <div class="dropdown-content">
-                <a href="../../index.php">Inicio</a>
+                <a href="assets/pages/perfil.php">Perfil</a>
                 <a href="assets/pages/admin_panel.php">Adm Usuario</a>
                 <a href="assets/pages/dashboard.html">Dashboard</a>
                 <a href="php/logout.php" class="text-danger">Salir</a>
@@ -600,6 +586,5 @@
         });
     });
 </script>
-<script src="../js/scripts.js"></script>
 </body>
 </html>

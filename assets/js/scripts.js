@@ -541,20 +541,65 @@ function renderCharts(data) {
 }
 
 // Update balance information
-function updateBalance(transactions) {
-    const totalIncome = transactions.filter(item => item.tipo === 'Ingreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
-    const totalExpense = transactions.filter(item => item.tipo === 'Egreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
-    const totalSavings = transactions.filter(item => item.categoria === 'Ahorros' && item.tipo === 'Ingreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
+async function fetchExchangeRate() {
+    try {
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD'); // URL de la API para obtener la cotización
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data.rates.UYU; // Retornar la cotización del dólar en pesos uruguayos
+    } catch (error) {
+        console.error('Error fetching exchange rate:', error);
+    }
+}
+
+async function updateBalance(transactions) {
+    const exchangeRate = await fetchExchangeRate();
+    if (!exchangeRate) {
+        showModal('Error', 'No se pudo obtener la cotización del dólar.');
+        return;
+    }
+
+    // Total ingresos excluyendo ingresos a ahorros
+    const totalIncome = transactions.filter(item => item.tipo === 'Ingreso' && item.categoria !== 'Ahorros').reduce((sum, item) => sum + parseFloat(item.monto), 0);
+    // Total ingresos a ahorros que se deben restar de los ingresos totales
+    const totalIncomeToSavings = transactions.filter(item => item.categoria === 'Ahorros' && item.tipo === 'Ingreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
+    // Total egresos que no sean a ahorros
+    const totalExpense = transactions.filter(item => item.tipo === 'Egreso' && item.categoria !== 'Ahorros').reduce((sum, item) => sum + parseFloat(item.monto), 0);
+    // Total egresos a ahorros que se deben sumar a los ahorros
     const totalSavingsExpense = transactions.filter(item => item.categoria === 'Ahorros' && item.tipo === 'Egreso').reduce((sum, item) => sum + parseFloat(item.monto), 0);
 
-    // Ajustar balances
-    const balance = totalIncome - totalExpense - totalSavings + totalSavingsExpense;
-    const savings = totalSavings - totalSavingsExpense;
+    // Ajustar balances: restar los ingresos a ahorros del total de ingresos
+    const adjustedTotalIncome = totalIncome - totalIncomeToSavings;
+    const savings = totalSavingsExpense - totalIncomeToSavings;
+    const savingsInDollars = savings / exchangeRate;
 
-    document.getElementById('total-income').innerText = totalIncome.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
-    document.getElementById('total-expense').innerText = totalExpense.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
-    document.getElementById('total-balance').innerText = balance.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
-    document.getElementById('total-savings').innerText = savings.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+    // Actualizar los elementos del DOM si existen
+    const totalIncomeElement = document.getElementById('total-income');
+    if (totalIncomeElement) {
+        totalIncomeElement.innerText = adjustedTotalIncome.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+    }
+
+    const totalExpenseElement = document.getElementById('total-expense');
+    if (totalExpenseElement) {
+        totalExpenseElement.innerText = totalExpense.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+    }
+
+    const totalBalanceElement = document.getElementById('total-balance');
+    if (totalBalanceElement) {
+        totalBalanceElement.innerText = (adjustedTotalIncome - totalExpense).toLocaleString('es-UY', { style: 'currency', currency: 'UYU' });
+    }
+
+    const totalSavingsElement = document.getElementById('total-savings');
+    if (totalSavingsElement) {
+        totalSavingsElement.innerText = `${savings.toLocaleString('es-UY', { style: 'currency', currency: 'UYU' })} $UY`;
+    }
+
+    const totalSavingsUsdElement = document.getElementById('total-savings-usd');
+    if (totalSavingsUsdElement) {
+        totalSavingsUsdElement.innerText = `${savingsInDollars.toLocaleString('en-US', { style: 'currency', currency: 'USD' })} USD`;
+    }
 }
 
 // Render pagination

@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $db_username;
         echo "Inicio de sesión exitoso. Redirigiendo...";
-        header('Location: ../controlgastos.html');
+        header('Location: ../index.php');
         exit;
     } else {
         echo "Error: Nombre de usuario o contraseña incorrectos.";

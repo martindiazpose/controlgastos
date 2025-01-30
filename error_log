@@ -64,3 +64,11 @@ Stack trace:
 Stack trace:
 #0 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/get_transactions.php on line 62
+[27-Jan-2025 10:51:51 America/Montevideo] PHP Warning:  include(session_check.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:51:51 America/Montevideo] PHP Warning:  include(): Failed opening 'session_check.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:51:54 America/Montevideo] PHP Warning:  include(session_check.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:51:54 America/Montevideo] PHP Warning:  include(): Failed opening 'session_check.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:52:57 America/Montevideo] PHP Warning:  include(/php/session_check.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:52:57 America/Montevideo] PHP Warning:  include(): Failed opening '/php/session_check.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:53:17 America/Montevideo] PHP Warning:  include(/php/session_check.php): Failed to open stream: No such file or directory in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4
+[27-Jan-2025 10:53:17 America/Montevideo] PHP Warning:  include(): Failed opening '/php/session_check.php' for inclusion (include_path='.:/opt/alt/php80/usr/share/pear:/opt/alt/php80/usr/share/php:/usr/share/pear:/usr/share/php') in /home3/wantedst/controlgastos.wantedstudio.uy/index.php on line 4

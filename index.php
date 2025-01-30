@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <?php include 'php/session_check.php'; ?>
     <link rel="manifest" href="/manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finanzas Personales</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="icon" href="carpeta.png" type="image/x-icon">
+    <link rel="icon" href="assets/img/carpeta.png" type="image/x-icon">
     <style>
         #patient-field {
             display: none;
@@ -165,10 +166,10 @@
         <div class="dropdown">
             <button class="btn btn-secondary dropbtn">Perfil</button>
             <div class="dropdown-content">
-                <a href="perfil.php">Perfil</a>
-                <a href="admin_panel.html">Adm Usuario</a>
+                <a href="assets/pages/perfil.php">Perfil</a>
+                <a href="assets/pages/admin_panel.html">Adm Usuario</a>
                 <a href="assets/pages/dashboard.html">Dashboard</a>
-                <a href="logout.php" class="text-danger">Salir</a>
+                <a href="php/logout.php" class="text-danger">Salir</a>
             </div>
         </div>
     </div>
@@ -308,6 +309,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="/assets/js/scripts.js"></script>
 </body>
 </html>
