@@ -1,3 +1,16 @@
+<?php
+// Verifica si la sesión ya está activa antes de iniciarla
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica si el usuario está autenticado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirige al login si no está autenticado
+    header("Location: login.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,8 +35,8 @@
             <button class="btn btn-secondary dropbtn">Perfil</button>
             <div class="dropdown-content">
                 <a href="assets/pages/perfil.php">Perfil</a>
-                <a href="assets/pages/admin_panel.html">Adm Usuario</a>
-                <a href="assets/pages/dashboard.html">Dashboard</a>
+                <a href="assets/pages/admin_panel.php">Adm Usuario</a>
+                <a href="assets/pages/dashboard.php">Dashboard</a>
                 <a href="php/logout.php" class="text-danger">
                     <i class="fas fa-sign-out-alt"></i> Salir
                 </a>
@@ -106,10 +119,10 @@
             <a href="assets/pages/perfil.php" class="btn" style="background-color: #f4b942; color: rgb(8, 8, 8); border-color: #f4b942;">
                 <i class="fas fa-user"></i> Perfil
             </a>
-            <a href="assets/pages/admin_panel.html" class="btn" style="background-color: #e74c3c; color: rgb(8, 8, 8); border-color: #e74c3c;">
+            <a href="assets/pages/admin_panel.php" class="btn" style="background-color: #e74c3c; color: rgb(8, 8, 8); border-color: #e74c3c;">
                 <i class="fas fa-users-cog"></i> Admin Panel
             </a>
-            <a href="assets/pages/dashboard.html" class="btn" style="background-color: #3498db; color:rgb(8, 8, 8); border-color: #3498db;">
+            <a href="assets/pages/dashboard.php" class="btn" style="background-color: #3498db; color:rgb(8, 8, 8); border-color: #3498db;">
                 <i class="fas fa-chart-line"></i> Dashboard
             </a>
         </div>

@@ -1,3 +1,14 @@
+<?php
+include('../../php/auth.php'); // auth.php ya maneja session_start()
+
+// Verifica si el usuario está autenticado
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirige al login si no está autenticado
+    header("Location: ../../login.html");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +17,7 @@
     <title>Panel Administrativo</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="../../assets/css/style.css"> <!-- Enlace al archivo CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="icon" href="../img/carpeta.png" type="image/x-icon">
@@ -82,6 +94,20 @@
             background-color: #6c757d;
             border-color: #6c757d;
         }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f6d365;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 15px;
+        }
         .dropdown-content a {
             color: white;
             padding: 12px 16px;
@@ -106,10 +132,9 @@
         <div class="dropdown">
             <button class="btn btn-secondary dropbtn">Perfil</button>
             <div class="dropdown-content">
-                <a href="assets/pages/perfil.php">Perfil</a>
-                <a href="assets/pages/admin_panel.php">Adm Usuario</a>
-                <a href="assets/pages/dashboard.html">Dashboard</a>
-                <a href="php/logout.php" class="text-danger">Salir</a>
+                <a href="../../index.php">Inicio</a>
+                <a href="dashboard.php">Dashboard</a>
+                <a href="../../php/logout.php" class="text-danger">Salir</a>
             </div>
         </div>
     </div>
@@ -137,7 +162,7 @@
                 <div class="input-group mb-3">
                     <input type="text" id="income-category-name" class="form-control" placeholder="Nombre de la categoría">
                     <div class="input-group-append">
-                        <button id="add-income-category" class="btn btn-primary">Agregar Categoría</button>
+                        <button id="add-income-category" class="btn btn-dark">Agregar Categoría</button>
                     </div>
                 </div>
                 <div class="filter-group mb-3">
@@ -152,7 +177,7 @@
                         <option disabled selected>Seleccionar categoría...</option>
                     </select>
                     <div class="input-group-append">
-                        <button id="add-income-subcategory" class="btn btn-primary">Agregar Subcategoría</button>
+                        <button id="add-income-subcategory" class="btn btn-dark">Agregar Subcategoría</button>
                     </div>
                 </div>
                 <div class="filter-group mb-3">
@@ -169,7 +194,7 @@
                 <div class="input-group mb-3">
                     <input type="text" id="expense-category-name" class="form-control" placeholder="Nombre de la categoría">
                     <div class="input-group-append">
-                        <button id="add-expense-category" class="btn btn-primary">Agregar Categoría</button>
+                        <button id="add-expense-category" class="btn btn-dark">Agregar Categoría</button>
                     </div>
                 </div>
                 <div class="filter-group mb-3">
@@ -184,7 +209,7 @@
                         <option disabled selected>Seleccionar categoría...</option>
                     </select>
                     <div class="input-group-append">
-                        <button id="add-expense-subcategory" class="btn btn-primary">Agregar Subcategoría</button>
+                        <button id="add-expense-subcategory" class="btn btn-dark">Agregar Subcategoría</button>
                     </div>
                 </div>
                 <div class="filter-group mb-3">
@@ -206,7 +231,7 @@
                         <option value="semanal">Semanal</option>
                     </select>
                     <div class="input-group-append">
-                        <button id="add-patient" class="btn btn-primary">Agregar Paciente</button>
+                        <button id="add-patient" class="btn btn-dark">Agregar Paciente</button>
                     </div>
                 </div>
                 <div class="filter-group mb-3">
@@ -219,24 +244,24 @@
                         <option value="semanal">Semanales</option>
                     </select>
                 </div>
-                <div class="row" id="patient-list"></div>
+                <div class="row" id="patient-list"></div>>
             </div>
         </div>
     </div>
 
     <!-- Modal de confirmación y mensajes -->
     <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="messageModalLabel">Mensaje</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="messageModalLabel">Aviso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalMessage">
-                    <!-- Mensaje se mostrará aquí -->
+                    Mensaje
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -248,13 +273,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <!-- Mensaje de confirmación se mostrará aquí -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button>
                 </div>
             </div>
@@ -586,5 +611,6 @@
         });
     });
 </script>
+<script src="../js/scripts.js"></script>
 </body>
 </html>

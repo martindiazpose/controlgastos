@@ -8,9 +8,7 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
-    $password = $_POST['password']; // No cifrar la contraseña aquí
-
-    echo "Usuario: $username, Contraseña: " . htmlspecialchars($password); // Verificar que se recibieron correctamente
+    $password = $_POST['password'];
 
     $stmt = $conn->prepare('SELECT id, username, password FROM usuarios WHERE username = ?');
     if (!$stmt) {
@@ -23,15 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_result($id, $db_username, $db_password_hash);
 
     if ($stmt->fetch() && password_verify($password, $db_password_hash)) {
+        // Establece las variables de sesión
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $db_username;
-        echo "Inicio de sesión exitoso. Redirigiendo...";
+        $_SESSION['user_id'] = $id; // Guarda el ID del usuario para futuras referencias
+
+        // Redirige al index.php
         header('Location: ../index.php');
-        exit;
+        exit();
     } else {
-        echo "Error: Nombre de usuario o contraseña incorrectos.";
-        header('Location: /login.html?error=1');
-        exit;
+        // Redirige al login.html con un mensaje de error
+        header('Location: ../login.html?error=1');
+        exit();
     }
 
     $stmt->close();
