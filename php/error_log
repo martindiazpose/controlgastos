@@ -255,3 +255,210 @@ Stack trace:
 #0 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(3): require()
 #1 {main}
   thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/send_email.php on line 7
+[30-Jan-2025 12:21:18 America/Montevideo] Tipo recibido: semanal
+[30-Jan-2025 12:21:23 America/Montevideo] PHP Warning:  Undefined variable $_SESSION in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 32
+[30-Jan-2025 12:21:23 America/Montevideo] PHP Warning:  Trying to access array offset on value of type null in /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php on line 32
+[30-Jan-2025 13:21:31 America/Montevideo] PHP Fatal error:  Uncaught Dotenv\Exception\InvalidFileException: Failed to parse dotenv file. Encountered unexpected whitespace at [loqz ctbn wyxb iewo]. in /home3/wantedst/controlgastos.wantedstudio.uy/vendor/vlucas/phpdotenv/src/Parser/Parser.php:30
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/vendor/graham-campbell/result-type/src/Error.php(119): Dotenv\Parser\Parser::Dotenv\Parser\{closure}()
+#1 /home3/wantedst/controlgastos.wantedstudio.uy/vendor/vlucas/phpdotenv/src/Parser/Parser.php(31): GrahamCampbell\ResultType\Error->mapError()
+#2 /home3/wantedst/controlgastos.wantedstudio.uy/vendor/vlucas/phpdotenv/src/Dotenv.php(222): Dotenv\Parser\Parser->parse()
+#3 /home3/wantedst/controlgastos.wantedstudio.uy/php/send_email.php(12): Dotenv\Dotenv->load()
+#4 /home3/wantedst/controlgastos.wantedstudio.uy/php/add_transaction.php(4): require('/home3/wantedst...')
+#5 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/vendor/vlucas/phpdotenv/src/Parser/Parser.php on line 30
+2025-01-30 13:46:32 - DEBUG: SERVER -> CLIENT: 220 smtp.gmail.com ESMTP d2e1a72fcca58-72fe653fa85sm1643973b3a.77 - gsmtp
+
+2025-01-30 13:46:32 - DEBUG: CLIENT -> SERVER: EHLO controlgastos.wantedstudio.uy
+
+2025-01-30 13:46:32 - DEBUG: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [161.0.125.71]
+250-SIZE 35882577
+250-8BITMIME
+250-STARTTLS
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+2025-01-30 13:46:32 - DEBUG: CLIENT -> SERVER: STARTTLS
+
+2025-01-30 13:46:32 - DEBUG: SERVER -> CLIENT: 220 2.0.0 Ready to start TLS
+
+2025-01-30 13:46:32 - DEBUG: CLIENT -> SERVER: EHLO controlgastos.wantedstudio.uy
+
+2025-01-30 13:46:32 - DEBUG: SERVER -> CLIENT: 250-smtp.gmail.com at your service, [161.0.125.71]
+250-SIZE 35882577
+250-8BITMIME
+250-AUTH LOGIN PLAIN XOAUTH2 PLAIN-CLIENTTOKEN OAUTHBEARER XOAUTH
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-CHUNKING
+250 SMTPUTF8
+
+2025-01-30 13:46:32 - DEBUG: CLIENT -> SERVER: AUTH LOGIN
+
+2025-01-30 13:46:33 - DEBUG: SERVER -> CLIENT: 334 VXNlcm5hbWU6
+
+2025-01-30 13:46:33 - DEBUG: CLIENT -> SERVER: [credentials hidden]
+2025-01-30 13:46:33 - DEBUG: SERVER -> CLIENT: 334 UGFzc3dvcmQ6
+
+2025-01-30 13:46:33 - DEBUG: CLIENT -> SERVER: [credentials hidden]
+2025-01-30 13:46:33 - DEBUG: SERVER -> CLIENT: 235 2.7.0 Accepted
+
+2025-01-30 13:46:33 - DEBUG: CLIENT -> SERVER: MAIL FROM:<martindiazpose22081986@gmail.com>
+
+2025-01-30 13:46:33 - DEBUG: SERVER -> CLIENT: 250 2.1.0 OK d2e1a72fcca58-72fe653fa85sm1643973b3a.77 - gsmtp
+
+2025-01-30 13:46:33 - DEBUG: CLIENT -> SERVER: RCPT TO:<martindiazpose@gmail.com>
+
+2025-01-30 13:46:33 - DEBUG: SERVER -> CLIENT: 250 2.1.5 OK d2e1a72fcca58-72fe653fa85sm1643973b3a.77 - gsmtp
+
+2025-01-30 13:46:33 - DEBUG: CLIENT -> SERVER: DATA
+
+2025-01-30 13:46:34 - DEBUG: SERVER -> CLIENT: 354 Go ahead d2e1a72fcca58-72fe653fa85sm1643973b3a.77 - gsmtp
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: Date: Thu, 30 Jan 2025 13:46:31 -0300
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: To: martindiazpose@gmail.com
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: From: Tu Nombre <martindiazpose22081986@gmail.com>
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: Subject: Prueba de correo
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: Message-ID: <fKhAP8WE5QE38rDrHdeP1juwuLtbxtyO5JoIImI@controlgastos.wantedstudio.uy>
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: X-Mailer: PHPMailer 6.9.3 (https://github.com/PHPMailer/PHPMailer)
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: MIME-Version: 1.0
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: Content-Type: text/html; charset=iso-8859-1
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: 
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: Este es un correo de prueba.
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: 
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: .
+
+2025-01-30 13:46:34 - DEBUG: SERVER -> CLIENT: 250 2.0.0 OK  1738255594 d2e1a72fcca58-72fe653fa85sm1643973b3a.77 - gsmtp
+
+2025-01-30 13:46:34 - DEBUG: CLIENT -> SERVER: QUIT
+
+2025-01-30 13:46:35 - DEBUG: SERVER -> CLIENT: 221 2.0.0 closing connection d2e1a72fcca58-72fe653fa85sm1643973b3a.77 - gsmtp
+
+Correo enviado correctamente a martindiazpose@gmail.com
+[30-Jan-2025 13:48:45 America/Montevideo] Tipo recibido: mensual
+[04-Feb-2025 08:23:47 America/Montevideo] Tipo recibido: mensual
+[04-Feb-2025 08:24:17 America/Montevideo] Tipo recibido: mensual
+[04-Feb-2025 08:25:31 America/Montevideo] Tipo recibido: mensual
+[04-Feb-2025 08:25:44 America/Montevideo] Tipo recibido: semanal
+[14-Feb-2025 12:00:16 America/Montevideo] Tipo recibido: mensual
+[14-Feb-2025 12:01:03 America/Montevideo] Tipo recibido: mensual
+[14-Feb-2025 12:01:38 America/Montevideo] Tipo recibido: mensual
+[14-Feb-2025 12:01:52 America/Montevideo] Tipo recibido: mensual
+[14-Feb-2025 12:02:08 America/Montevideo] Tipo recibido: mensual
+[15-Feb-2025 18:57:18 America/Montevideo] Tipo recibido: mensual
+[15-Feb-2025 18:57:26 America/Montevideo] Tipo recibido: semanal
+[16-Feb-2025 13:08:30 America/Montevideo] Tipo recibido: mensual
+[16-Feb-2025 13:08:42 America/Montevideo] Tipo recibido: semanal
+[15-Mar-2025 20:53:15 America/Montevideo] Tipo recibido: mensual
+[15-Mar-2025 20:53:31 America/Montevideo] Tipo recibido: semanal
+[20-Mar-2025 15:58:45 America/Montevideo] Tipo recibido: mensual
+[21-Mar-2025 13:14:33 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:55
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php(55): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 55
+[21-Mar-2025 13:15:20 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:55
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php(55): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 55
+[21-Mar-2025 13:16:03 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:57
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php(57): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 57
+[21-Mar-2025 13:18:20 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:57
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php(57): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 57
+[21-Mar-2025 13:22:56 America/Montevideo] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:57
+Stack trace:
+#0 /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php(57): mysqli_stmt->bind_param()
+#1 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 57
+[21-Mar-2025 13:32:06 America/Montevideo] Tipo recibido: mensual
+[22-Mar-2025 10:28:59 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 10:41:26 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 12:33:23 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 16:27:47 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 16:36:38 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 16:40:29 America/Montevideo] Tipo recibido: semanal
+[23-Mar-2025 17:19:02 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 17:21:09 America/Montevideo] Tipo recibido: semanal
+[23-Mar-2025 17:23:54 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 17:27:11 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 17:37:37 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:112
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 112
+[23-Mar-2025 17:37:57 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:112
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 112
+[23-Mar-2025 17:52:02 America/Montevideo] Tipo recibido: mensual
+[23-Mar-2025 18:17:14 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:103
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 103
+[23-Mar-2025 18:17:21 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function bind_param() on bool in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:103
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 103
+[24-Mar-2025 14:12:22 America/Montevideo] Tipo recibido: semanal
+[24-Mar-2025 21:27:29 America/Montevideo] ID recibido para eliminar: 953
+[24-Mar-2025 21:31:24 America/Montevideo] ID recibido para eliminar: 947
+[24-Mar-2025 23:17:19 America/Montevideo] Tipo recibido: mensual
+[24-Mar-2025 23:30:43 America/Montevideo] ID recibido para eliminar: 950
+[24-Mar-2025 23:39:40 America/Montevideo] Tipo recibido: mensual
+[24-Mar-2025 23:48:10 America/Montevideo] Tipo recibido: semanal
+[24-Mar-2025 23:50:48 America/Montevideo] Tipo recibido: mensual
+[25-Mar-2025 00:07:25 America/Montevideo] PHP Warning:  Undefined variable $result in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:07:25 America/Montevideo] PHP Warning:  Undefined variable $result in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:07:25 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:70
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:07:25 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:70
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:07:25 America/Montevideo] PHP Warning:  Undefined variable $result in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:07:25 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:70
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:09:10 America/Montevideo] PHP Warning:  Undefined variable $result in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:09:10 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:70
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:09:10 America/Montevideo] PHP Warning:  Undefined variable $result in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:09:10 America/Montevideo] PHP Warning:  Undefined variable $result in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:09:10 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:70
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:09:10 America/Montevideo] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on null in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php:70
+Stack trace:
+#0 {main}
+  thrown in /home3/wantedst/controlgastos.wantedstudio.uy/php/get_transactions.php on line 70
+[25-Mar-2025 00:58:32 America/Montevideo] Tipo recibido: mensual
+[25-Mar-2025 10:45:28 America/Montevideo] Tipo recibido: mensual
+[25-Mar-2025 11:26:34 America/Montevideo] PHP Warning:  mysqli::__construct(): (28000/1045): Access denied for user 'usuario'@'localhost' (using password: YES) in /home3/wantedst/controlgastos.wantedstudio.uy/php/delete_transaction.php on line 11
+[25-Mar-2025 12:57:23 America/Montevideo] Tipo recibido: mensual
+[25-Mar-2025 14:52:09 America/Montevideo] Tipo recibido: semanal
+[26-Mar-2025 10:16:59 America/Montevideo] Tipo recibido: mensual
